@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="fonts-local.css">
+<style>
+  :root{--ink:#0D0F13;--ink-soft:#585D66;--paper:#F3F0E8;--paper-raised:#FAF8F3;--amber:#F0B90B;--amber-deep:#8A6B06;--line:#DAD5C6;--line-dark:#2B2E35;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{width:1080px;height:1920px;overflow:hidden;background:var(--ink);}
+  body{font-family:'Montserrat',sans-serif;-webkit-font-smoothing:antialiased;color:var(--paper-raised);}
+  .scene{position:absolute;inset:0;visibility:hidden;overflow:hidden;}
+  .ink{background:var(--ink);color:var(--paper-raised);}
+  .amber{background:var(--amber);color:var(--ink);}
+  .paper{background:var(--paper);color:var(--ink);}
+  .inner{position:absolute;left:90px;right:90px;}
+  .display{font-family:'Unbounded',sans-serif;font-weight:800;text-transform:uppercase;line-height:1.0;}
+  .fit{display:block;width:max-content;white-space:nowrap;transform-origin:left center;margin-bottom:0.04em;}
+  .tag{display:inline-block;font-family:'Unbounded',sans-serif;font-weight:700;text-transform:uppercase;font-size:34px;padding:14px 30px;border-radius:999px;letter-spacing:0.02em;}
+  .tag.dark{background:var(--ink);color:var(--amber);}
+  .tag.soft{background:rgba(240,185,11,0.16);color:var(--amber-deep);}
+  .tag.amb{background:var(--amber);color:var(--ink);}
+  .eyebrow{font-size:38px;font-weight:700;letter-spacing:0.03em;display:flex;align-items:center;gap:18px;}
+  .eyebrow .dot{width:16px;height:16px;border-radius:50%;background:currentColor;}
+  .halftone{position:absolute;inset:0;background-image:radial-gradient(circle, rgba(255,255,255,0.14) 1.5px, transparent 2px);background-size:11px 11px;opacity:0.45;
+    -webkit-mask-image:radial-gradient(ellipse 90% 55% at 80% 20%, black 10%, transparent 70%);mask-image:radial-gradient(ellipse 90% 55% at 80% 20%, black 10%, transparent 70%);}
+  .strike{position:absolute;height:22px;background:var(--ink);transform-origin:left center;border-radius:3px;}
+  .grain{position:absolute;inset:0;z-index:50;pointer-events:none;opacity:0.06;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+  .flash{position:absolute;inset:0;background:#fff;opacity:0;z-index:45;pointer-events:none;}
+  .marquee{position:absolute;left:-40px;right:-40px;height:110px;background:var(--amber);color:var(--ink);display:flex;align-items:center;overflow:hidden;}
+  .marquee .track{display:flex;white-space:nowrap;}
+  .marquee span{font-family:'Unbounded',sans-serif;font-weight:800;font-size:40px;text-transform:uppercase;padding:0 30px;}
+  .marquee span::after{content:'●';font-size:16px;margin-left:60px;vertical-align:middle;}
+  .ph{position:absolute;left:90px;width:900px;height:560px;border-radius:26px;overflow:hidden;border:2px solid var(--ink);}
+  .ph img{width:100%;height:100%;object-fit:cover;}
+  .logo{display:flex;align-items:center;gap:34px;}
+  .mark{width:50px;height:50px;background:var(--amber);border-radius:11px;transform:rotate(45deg);flex-shrink:0;}
+  .logo-stack{display:flex;flex-direction:column;font-family:'Unbounded',sans-serif;line-height:1.02;}
+  .logo-main{font-weight:800;text-transform:uppercase;font-size:150px;}
+  .logo-sub{font-weight:700;color:var(--amber);text-transform:uppercase;font-size:46px;margin-top:16px;letter-spacing:0.03em;}
+  .btn{display:flex;align-items:center;justify-content:center;height:150px;border-radius:22px;background:var(--amber);color:var(--ink);font-weight:800;font-size:52px;}
+  .url{font-size:38px;font-weight:600;color:#C9CBD1;text-align:center;}
+  .tap{position:absolute;width:120px;height:120px;border-radius:50%;border:5px solid var(--ink);opacity:0;}
+</style>
+</head>
+<body>
+
+<!-- 1: hook -->
+<div class="scene ink" id="c1">
+  <div class="halftone"></div>
+  <div class="inner" style="top:560px">
+    <div class="display"><span class="fit w">Не ещё</span><span class="fit w">одна</span><span class="fit w" style="color:var(--amber)">конференция.</span></div>
+  </div>
+</div>
+
+<!-- 2: amber, strike -->
+<div class="scene amber" id="c2">
+  <div class="inner" style="top:640px">
+    <div class="display"><span class="fit w">Не просто</span><span class="fit w" id="lis">послушать.</span></div>
+  </div>
+  <div class="strike" id="strike1"></div>
+</div>
+
+<!-- 3: ink, решить -->
+<div class="scene ink" id="c3">
+  <div class="halftone"></div>
+  <div class="inner" style="top:600px">
+    <div class="display" style="color:var(--amber)"><span class="fit w">Приехать</span><span class="fit w">решить.</span></div>
+    <div class="eyebrow" style="color:var(--paper-raised);margin-top:70px"><span class="dot" style="background:var(--amber)"></span>13–14 ноября 2026 · Москва</div>
+  </div>
+</div>
+
+<!-- 4: hot seat -->
+<div class="scene paper" id="c4">
+  <div class="inner" style="top:520px">
+    <span class="tag dark">Hot Seat</span>
+    <div class="display" style="margin-top:60px"><span class="fit w">Вопрос,</span><span class="fit w">который вы</span><span class="fit w" style="color:var(--amber-deep)">боитесь</span><span class="fit w">задать</span></div>
+  </div>
+</div>
+
+<!-- 5: business live -->
+<div class="scene ink" id="c5">
+  <div class="inner" style="top:470px">
+    <span class="tag amb">Business Live</span>
+    <div class="display" style="margin-top:60px"><span class="fit w">Три бизнеса.</span><span class="fit w">Три проблемы.</span><span class="fit w" style="color:var(--amber)">Три решения.</span></div>
+    <p style="margin-top:56px;font-size:46px;font-weight:600;color:#C9CBD1;line-height:1.35">Разбор идёт по цифрам —<br><b style="color:var(--paper-raised)">вживую.</b></p>
+  </div>
+</div>
+
+<!-- 6: photos -->
+<div class="scene ink" id="c6">
+  <div class="inner" style="top:150px"><div class="display"><span class="fit w">Так выглядят</span><span class="fit w" style="color:var(--amber)">наши встречи</span></div></div>
+  <div class="ph" style="top:560px"><img src="img3.jpg"></div>
+  <div class="ph" style="top:900px"><img src="img7.jpg"></div>
+  <div class="ph" style="top:1240px"><img src="img2.jpg"></div>
+</div>
+
+<!-- 7: 200-300 -->
+<div class="scene ink" id="c7">
+  <div class="halftone"></div>
+  <div class="inner" style="top:420px">
+    <div class="display"><span class="fit w" style="color:var(--amber)">200–300</span><span class="fit w">правильных</span><span class="fit w">людей</span><span class="fit w" style="margin-top:40px">сильнее, чем</span><span class="fit w" id="rnd" style="color:#9FA3AB">3 000 случайных</span></div>
+  </div>
+  <div class="strike" id="strike2" style="background:var(--amber)"></div>
+</div>
+
+<!-- 8: не билет -->
+<div class="scene amber" id="c8">
+  <div class="inner" style="top:700px">
+    <div class="display"><span class="fit w">Вы покупаете</span><span class="fit w">не билет.</span></div>
+    <p style="margin-top:60px;font-size:44px;font-weight:600;line-height:1.35">Вы покупаете доступ к людям, знаниям, решениям и новым возможностям.</p>
+  </div>
+</div>
+
+<!-- 9: lockup -->
+<div class="scene ink" id="c9">
+  <div class="halftone"></div>
+  <div class="marquee" style="top:0" id="mq1"><div class="track">
+    <span>Деньги</span><span>Клиенты</span><span>Команда</span><span>Рост</span><span>Будущее</span><span>Business Live</span><span>Business Match</span><span>Owner Tables</span><span>Деньги</span><span>Клиенты</span><span>Команда</span><span>Рост</span>
+  </div></div>
+  <div class="inner" style="top:560px">
+    <div class="logo"><div class="mark"></div><div class="logo-stack"><span class="logo-main">Решено</span><span class="logo-sub">Business Live</span></div></div>
+    <div class="eyebrow" style="color:var(--amber);margin-top:80px"><span class="dot"></span>13–14 ноября 2026 · Москва</div>
+    <p id="early" style="margin-top:34px;font-size:38px;font-weight:600;color:#C9CBD1;line-height:1.4">Стартовая цена — только для <b style="color:var(--paper-raised)">первых 50 участников</b>.</p>
+    <div class="btn" style="margin-top:90px">Участвовать</div>
+    <p class="url" style="margin-top:36px">sportbusinessforum.netlify.app</p>
+  </div>
+  <div class="tap"></div>
+</div>
+
+<div class="flash"></div>
+<div class="grain"></div>
+
+<script>
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)), prog=(t,a,d)=>clamp((t-a)/d);
+const outQuart=x=>1-Math.pow(1-x,4), outBack=x=>{const c=1.4;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2);};
+const lerp=(a,b,x)=>a+(b-a)*x;
+
+// hard cuts on the beat (120 BPM: beat 0.5s, bar 2s)
+const S={c1:[0,2],c2:[2,4],c3:[4,6],c4:[6,8.5],c5:[8.5,11],c6:[11,13],c7:[13,16],c8:[16,18],c9:[18,21.5]};
+window.DURATION=21.5;
+const CUTS=[2,4,6,8.5,11,13,16,18];
+
+function fitAll(){
+  const W=900;
+  $$('.fit').forEach(el=>{
+    el.style.fontSize='100px';
+    const w=el.scrollWidth; el.style.fontSize=(100*W/w)+'px';
+  });
+}
+function slam(el,t,st,d=0.28,from=1.35){
+  const p=outQuart(prog(t,st,d));
+  el.style.opacity=p>0?1:0;
+  el.style.transform=`scale(${lerp(from,1,p)})`;
+}
+function up(el,t,st,d=0.35,dist=60){
+  const p=outQuart(prog(t,st,d));
+  el.style.opacity=p; el.style.transform=`translateY(${lerp(dist,0,p)}px)`;
+}
+function placeStrike(bar,target,t,st,d=0.3){
+  const r=target.getBoundingClientRect();
+  const p=outQuart(prog(t,st,d));
+  bar.style.left=(r.left-12)+'px'; bar.style.top=(r.top+r.height*0.47-11)+'px';
+  bar.style.width=(r.width+24)+'px'; bar.style.transform=`scaleX(${p}) rotate(-2deg)`;
+}
+
+window.render=function(t){
+  for(const [id,[a,b]] of Object.entries(S)) $('#'+id).style.visibility=(t>=a&&t<b)?'visible':'hidden';
+  // white flash on each cut
+  let fl=0; for(const c of CUTS){ if(t>=c&&t<c+0.12) fl=Math.max(fl,0.22*(1-prog(t,c,0.12))); }
+  $('.flash').style.opacity=fl;
+
+  // 1
+  { const l=t; $$('#c1 .fit').forEach((e,i)=>slam(e,l,0.05+i*0.22)); $('#c1 .display').style.transform=`scale(${1+l*0.012})`; }
+  // 2
+  { const l=t-2; $$('#c2 .fit').forEach((e,i)=>slam(e,l,0.0+i*0.18,0.25,1.25));
+    placeStrike($('#strike1'),$('#lis'),l,0.95,0.28);
+    $('#lis').style.opacity = l>0.95 ? lerp(1,0.45,prog(l,0.95,0.3)) : (l>=0.18?1:0); }
+  // 3
+  { const l=t-4; $$('#c3 .fit').forEach((e,i)=>slam(e,l,0.0+i*0.2,0.3,1.4)); up($('#c3 .eyebrow'),l,0.55);
+    $('#c3 .display').style.transform=`scale(${1+l*0.012})`; }
+  // 4
+  { const l=t-6; up($('#c4 .tag'),l,0.0,0.3,40); $$('#c4 .fit').forEach((e,i)=>slam(e,l,0.15+i*0.14,0.25,1.2)); }
+  // 5
+  { const l=t-8.5; up($('#c5 .tag'),l,0.0,0.3,40); $$('#c5 .fit').forEach((e,i)=>slam(e,l,0.12+i*0.16,0.25,1.2)); up($('#c5 p'),l,0.7); }
+  // 6: photos slam in one per beat
+  { const l=t-11; $$('#c6 .fit').forEach((e,i)=>slam(e,l,0.0+i*0.12,0.25,1.2));
+    $$('#c6 .ph').forEach((p,i)=>{ const st=0.35+i*0.5, q=outQuart(prog(l,st,0.3));
+      p.style.opacity=q>0?1:0; p.style.transform=`translateX(${lerp(i%2?-1100:1100,0,q)}px) rotate(${lerp(i%2?-4:4,i%2?1.2:-1.2,q)}deg)`;
+      $('img',p).style.transform=`scale(${1.12-l*0.02})`; }); }
+  // 7
+  { const l=t-13; $$('#c7 .fit').forEach((e,i)=>slam(e,l,0.0+i*0.15,0.25,1.2));
+    placeStrike($('#strike2'),$('#rnd'),l,2.0,0.28); }
+  // 8
+  { const l=t-16; $$('#c8 .fit').forEach((e,i)=>slam(e,l,0.0+i*0.2,0.25,1.3)); up($('#c8 p'),l,0.55); }
+  // 9
+  { const l=t-18;
+    $('#mq1 .track').style.transform=`translateX(${-l*160}px)`;
+    const lg=$('#c9 .logo'); slam(lg,l,0.0,0.3,1.25);
+    $('#c9 .mark').style.transform=`rotate(${lerp(-135,45,outQuart(prog(l,0,0.5)))}deg)`;
+    up($('#c9 .eyebrow'),l,0.3); up($('#early'),l,0.5); up($('#c9 .btn'),l,0.7); up($('#c9 .url'),l,0.8);
+    // tap on the button
+    const b=$('#c9 .btn'); const r=b.getBoundingClientRect(); const tap=$('#c9 .tap');
+    const tp=prog(l,1.9,0.45);
+    tap.style.left=(r.left+r.width*0.5-60)+'px'; tap.style.top=(r.top+r.height*0.5-60)+'px';
+    tap.style.opacity = l>=1.9 ? (1-tp)*0.8 : 0; tap.style.transform=`scale(${lerp(0.4,2.2,outQuart(tp))})`;
+    const press=prog(l,1.9,0.08)-prog(l,2.0,0.15);
+    const on=l>=1.95;
+    b.style.transform += ` scale(${1-0.04*press})`;
+    b.style.background=on?'#FAF8F3':'#F0B90B';
+  }
+};
+
+window.ready=(async()=>{
+  await document.fonts.ready;
+  await Promise.all(['800 40px Unbounded','700 40px Unbounded','600 40px Montserrat','700 40px Montserrat','800 40px Montserrat'].map(f=>document.fonts.load(f,'РЕШЕНО Aa')));
+  await Promise.all([...document.images].map(i=>i.decode().catch(()=>{})));
+  // measure with every scene laid out
+  $$('.scene').forEach(s=>s.style.visibility='visible'); fitAll();
+  ['c1','c2','c3','c4','c5','c7','c8'].forEach(id=>{ const inn=$('#'+id+' .inner'); const h=inn.getBoundingClientRect().height; inn.style.top=Math.round((1920-h)/2-30)+'px'; });
+  $$('.scene').forEach(s=>s.style.visibility='hidden');
+  return true;
+})();
+</script>
+</body>
+</html>
