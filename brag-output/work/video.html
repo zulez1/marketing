@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="fonts-local.css">
+<style>
+  :root{
+    --ink:#0D0F13; --ink-soft:#585D66; --paper:#F3F0E8; --paper-raised:#FAF8F3;
+    --amber:#F0B90B; --amber-deep:#8A6B06; --line:#DAD5C6; --line-dark:#2B2E35;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{width:1920px;height:1080px;overflow:hidden;background:var(--ink);}
+  body{font-family:'Montserrat',sans-serif;-webkit-font-smoothing:antialiased;color:var(--paper-raised);}
+  .stage{position:absolute;inset:0;overflow:hidden;}
+  .scene{position:absolute;inset:0;visibility:hidden;}
+  .display{font-family:'Unbounded',sans-serif;font-weight:800;text-transform:uppercase;line-height:1.05;}
+
+  .halftone{position:absolute;inset:0;
+    background-image:radial-gradient(circle, rgba(255,255,255,0.14) 1.3px, transparent 1.7px);
+    background-size:9px 9px;opacity:0.5;
+    -webkit-mask-image:radial-gradient(ellipse 80% 60% at 75% 30%, black 10%, transparent 70%);
+            mask-image:radial-gradient(ellipse 80% 60% at 75% 30%, black 10%, transparent 70%);}
+  .arc{position:absolute;right:-8%;top:-14%;width:72%;height:128%;pointer-events:none;}
+  .grain{position:absolute;inset:0;z-index:50;pointer-events:none;opacity:0.05;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+  .dip{position:absolute;inset:0;background:var(--ink);z-index:40;opacity:0;}
+
+  /* ---------- scene 1: hook ---------- */
+  .eyebrow{font-size:26px;color:var(--amber);font-weight:700;letter-spacing:0.04em;display:flex;align-items:center;gap:16px;}
+  .eyebrow .dot{width:12px;height:12px;background:var(--amber);border-radius:50%;}
+  #s1 .eyebrow{position:absolute;left:150px;top:150px;}
+  #s1 h1{position:absolute;left:144px;top:220px;font-size:156px;letter-spacing:-0.01em;color:var(--paper-raised);}
+  .line{display:block;overflow:hidden;padding-bottom:0.04em;}
+  .line > span{display:inline-block;}
+  .accent{color:var(--amber);}
+  #s1 .tagline{position:absolute;left:150px;top:946px;font-size:30px;color:#C9CBD1;font-weight:600;}
+
+  /* ---------- scene 2: reveal ---------- */
+  .logo{display:flex;align-items:center;gap:26px;}
+  .mark{width:30px;height:30px;background:var(--amber);border-radius:7px;transform:rotate(45deg);flex-shrink:0;}
+  .logo-stack{display:flex;flex-direction:column;font-family:'Unbounded',sans-serif;line-height:1.02;}
+  .logo-main{font-weight:800;text-transform:uppercase;}
+  .logo-sub{font-weight:700;letter-spacing:0.04em;color:var(--amber);text-transform:uppercase;}
+  #s2 .logo{position:absolute;left:150px;top:300px;}
+  #s2 .logo-main{font-size:112px;}
+  #s2 .logo-sub{font-size:34px;margin-top:14px;}
+  #s2 .tagline{position:absolute;left:150px;top:560px;width:680px;font-size:40px;line-height:1.3;font-weight:600;color:#C9CBD1;}
+  #s2 .tagline b{color:var(--paper-raised);font-weight:700;}
+  .photos{position:absolute;left:930px;top:0;width:990px;height:930px;}
+  .ph{position:absolute;width:440px;height:293px;border-radius:18px;overflow:hidden;border:1px solid var(--line-dark);}
+  .ph img{width:100%;height:100%;object-fit:cover;display:block;}
+  .marquee{position:absolute;left:0;right:0;top:980px;height:100px;background:var(--amber);color:var(--ink);border-top:1px solid var(--ink);}
+  .marquee-track{position:absolute;top:0;left:0;display:flex;white-space:nowrap;height:100%;align-items:center;}
+  .marquee-track span{font-family:'Unbounded',sans-serif;font-weight:800;font-size:32px;text-transform:uppercase;padding:0 36px;display:inline-flex;align-items:center;letter-spacing:0.02em;}
+  .marquee-track span::after{content:'●';font-size:14px;margin-left:72px;}
+
+  /* ---------- scene 3: signature ---------- */
+  #s3{background:var(--paper);color:var(--ink);}
+  #s3 .kicker{position:absolute;left:150px;top:150px;font-size:26px;color:var(--amber-deep);font-weight:700;letter-spacing:0.03em;text-transform:uppercase;}
+  #s3 h2{position:absolute;left:146px;top:206px;font-size:92px;color:var(--ink);}
+  .cards{position:absolute;left:150px;top:560px;width:1620px;display:grid;grid-template-columns:repeat(3,1fr);gap:30px;}
+  .card{background:var(--paper-raised);border:1.5px solid var(--line);border-radius:28px;padding:40px 40px 44px;height:360px;}
+  .card .num{font-family:'Unbounded',sans-serif;font-weight:800;font-size:26px;color:var(--ink-soft);opacity:0.5;margin-bottom:22px;}
+  .card .tag{display:inline-block;font-family:'Unbounded',sans-serif;text-transform:uppercase;font-weight:700;font-size:21px;color:var(--amber-deep);background:rgba(240,185,11,0.16);padding:10px 22px;border-radius:999px;margin-bottom:28px;}
+  .card h4{font-weight:700;font-size:44px;line-height:1.18;color:var(--ink);}
+  .card h4 em{font-style:normal;color:var(--amber-deep);white-space:nowrap;}
+
+  /* ---------- scene 4: claim ---------- */
+  #s4 .claim{position:absolute;left:150px;top:260px;font-size:112px;color:var(--paper-raised);}
+  #s4 .sub{position:absolute;left:150px;top:840px;font-size:32px;color:#AEB1B8;font-weight:600;width:1100px;line-height:1.4;}
+
+  /* ---------- scene 5: lockup ---------- */
+  #s5 .center{position:absolute;left:0;right:0;top:250px;display:flex;flex-direction:column;align-items:center;}
+  #s5 .logo{gap:40px;}
+  #s5 .mark{width:52px;height:52px;border-radius:11px;}
+  #s5 .logo-main{font-size:176px;}
+  #s5 .logo-sub{font-size:48px;margin-top:18px;}
+  #s5 .eyebrow{margin-top:70px;font-size:32px;}
+  .btn-row{margin-top:64px;display:flex;align-items:center;gap:40px;}
+  .btn{display:inline-flex;align-items:center;justify-content:center;padding:26px 56px;font-weight:700;font-size:32px;border-radius:14px;background:var(--amber);color:var(--ink);border:2px solid var(--amber);}
+  .url{font-size:32px;font-weight:600;color:#C9CBD1;}
+  .cursor{position:absolute;width:44px;height:44px;z-index:30;}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <!-- scene 1 -->
+  <div class="scene" id="s1">
+    <div class="halftone"></div>
+    <svg class="arc" id="arc1" viewBox="0 0 900 900">
+      <defs><linearGradient id="arcFade" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F0B90B" stop-opacity="0.9"/><stop offset="100%" stop-color="#F0B90B" stop-opacity="0"/></linearGradient></defs>
+      <g class="spin"><circle cx="620" cy="260" r="230" fill="none" stroke="url(#arcFade)" stroke-width="1.5" stroke-dasharray="4 10"/></g>
+      <circle cx="620" cy="260" r="310" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <path class="sweep" d="M -120 780 C 200 640, 450 560, 1050 380" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="1.4"/>
+    </svg>
+    <div class="eyebrow"><span class="dot"></span>13–14 ноября 2026 · Москва</div>
+    <h1 class="display">
+      <span class="line"><span>Не просто</span></span>
+      <span class="line"><span>послушать.</span></span>
+      <span class="line"><span class="accent">Приехать</span></span>
+      <span class="line"><span class="accent">решить.</span></span>
+    </h1>
+    <p class="tagline">Форум владельцев и руководителей спортивного бизнеса</p>
+  </div>
+
+  <!-- scene 2 -->
+  <div class="scene" id="s2">
+    <div class="halftone" style="opacity:0.3"></div>
+    <div class="logo">
+      <div class="mark"></div>
+      <div class="logo-stack"><span class="logo-main">Решено</span><span class="logo-sub">Business Live</span></div>
+    </div>
+    <p class="tagline">Форум владельцев<br>и руководителей<br>спортивного бизнеса</p>
+    <div class="photos">
+      <div class="ph"><img src="img3.jpg"></div>
+      <div class="ph"><img src="img5.jpg"></div>
+      <div class="ph"><img src="img2.jpg"></div>
+      <div class="ph"><img src="img7.jpg"></div>
+      <div class="ph"><img src="img6.jpg"></div>
+      <div class="ph"><img src="img4.jpg"></div>
+    </div>
+    <div class="marquee"><div class="marquee-track">
+      <span>Деньги</span><span>Клиенты</span><span>Команда</span><span>Рост</span><span>Будущее</span>
+      <span>Business Live</span><span>Business Match</span><span>Owner Tables</span>
+      <span>Деньги</span><span>Клиенты</span><span>Команда</span><span>Рост</span><span>Будущее</span>
+      <span>Business Live</span><span>Business Match</span><span>Owner Tables</span>
+    </div></div>
+  </div>
+
+  <!-- scene 3 -->
+  <div class="scene" id="s3">
+    <div class="kicker">Signature-формат · Business Live</div>
+    <h2 class="display">
+      <span class="line"><span>Три бизнеса.</span></span>
+      <span class="line"><span>Три проблемы.</span></span>
+      <span class="line"><span class="accent" style="color:var(--amber-deep)">Три решения.</span></span>
+    </h2>
+    <div class="cards">
+      <div class="card"><div class="num">#01</div><div class="tag">Business Live #1</div><h4>Почему этот бизнес не растёт?</h4></div>
+      <div class="card"><div class="num">#02</div><div class="tag">Business Live #2</div><h4>Где этот бизнес теряет деньги?</h4></div>
+      <div class="card"><div class="num">#03</div><div class="tag">Business Live #3</div><h4>Как вырасти <em>в 3 раза?</em></h4></div>
+    </div>
+  </div>
+
+  <!-- scene 4 -->
+  <div class="scene" id="s4">
+    <div class="halftone" style="opacity:0.35"></div>
+    <h2 class="display claim">
+      <span class="line"><span class="accent">200–300</span></span>
+      <span class="line"><span>правильных людей</span></span>
+      <span class="line"><span>сильнее, чем</span></span>
+      <span class="line"><span>3 000 случайных</span></span>
+    </h2>
+  </div>
+
+  <!-- scene 5 -->
+  <div class="scene" id="s5">
+    <div class="halftone"></div>
+    <svg class="arc" viewBox="0 0 900 900">
+      <g class="spin"><circle cx="620" cy="260" r="230" fill="none" stroke="url(#arcFade)" stroke-width="1.5" stroke-dasharray="4 10"/></g>
+      <circle cx="620" cy="260" r="310" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+    </svg>
+    <div class="center">
+      <div class="logo">
+        <div class="mark"></div>
+        <div class="logo-stack"><span class="logo-main">Решено</span><span class="logo-sub">Business Live</span></div>
+      </div>
+      <div class="eyebrow"><span class="dot"></span>13–14 ноября 2026 · Москва</div>
+      <div class="btn-row"><span class="btn">Участвовать</span><span class="url">sportbusinessforum.netlify.app</span></div>
+    </div>
+    <svg class="cursor" viewBox="0 0 24 24"><path d="M4 2 L4 19 L8.6 14.8 L11.6 21.4 L14.4 20.2 L11.4 13.8 L17.6 13.6 Z" fill="#FAF8F3" stroke="#0D0F13" stroke-width="1.3" stroke-linejoin="round"/></svg>
+  </div>
+
+  <div class="dip"></div>
+  <div class="grain"></div>
+</div>
+
+<script>
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+const clamp = (x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const prog = (t,a,d)=>clamp((t-a)/d);
+const outQuart = x=>1-Math.pow(1-x,4);
+const outCubic = x=>1-Math.pow(1-x,3);
+const inOut = x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const lerp=(a,b,x)=>a+(b-a)*x;
+
+// scene windows [start, end]
+const S = { s1:[0,5.2], s2:[5.2,10.6], s3:[10.6,16.2], s4:[16.2,19.4], s5:[19.4,23.0] };
+const CUTS = [5.2,10.6,16.2,19.4];
+window.DURATION = 23.0;
+
+function rise(el, t, start, dur=0.9){
+  const p = outQuart(prog(t,start,dur));
+  el.style.transform = `translateY(${lerp(112,0,p)}%)`;
+}
+function fadeUp(el, t, start, dur=0.8, dist=30){
+  const p = outCubic(prog(t,start,dur));
+  el.style.opacity = p;
+  el.style.transform = `translateY(${lerp(dist,0,p)}px)`;
+}
+
+window.render = function(t){
+  // scene visibility
+  for (const [id,[a,b]] of Object.entries(S)){
+    $('#'+id).style.visibility = (t>=a && t<b) ? 'visible' : 'hidden';
+  }
+  // dip through ink around each cut (old out, then new in)
+  let dip = 0;
+  for (const c of CUTS){
+    if (t>=c-0.32 && t<c) dip = Math.max(dip, inOut(prog(t,c-0.32,0.32)));
+    if (t>=c && t<c+0.4) dip = Math.max(dip, 1-inOut(prog(t,c,0.4)));
+  }
+  if (t < 0.25) dip = Math.max(dip, 1 - prog(t,0,0.25)); // soft open (overridden by poster frame)
+  if (t > DURATION-0.5) dip = Math.max(dip, inOut(prog(t,DURATION-0.5,0.5)));
+  $('.dip').style.opacity = dip;
+
+  // ---- scene 1 ----
+  {
+    const s = $('#s1');
+    $$('.spin', s).forEach(g=>g.setAttribute('transform',`rotate(${t*6} 620 260)`));
+    const arc = $('.arc', s); arc.style.transform = `translateY(${-t*6}px)`;
+    fadeUp($('.eyebrow',s), t, 0.15, 0.8, 20);
+    const lines = $$('h1 .line > span', s);
+    [0.25,0.42,1.25,1.42].forEach((st,i)=>rise(lines[i], t, st, 0.95));
+    // once "решить" lands, "послушать" steps back
+    const dim = inOut(prog(t,2.2,0.9));
+    lines[0].style.opacity = lines[1].style.opacity = lerp(1,0.32,dim);
+    fadeUp($('.tagline',s), t, 2.3, 0.9, 16);
+    $('h1',s).style.transform = `scale(${lerp(1,1.025,prog(t,0,5.2))})`;
+    $('h1',s).style.transformOrigin = 'left center';
+  }
+
+  // ---- scene 2 ----
+  {
+    const s = $('#s2'), l = t - S.s2[0];
+    const logo = $('.logo', s);
+    const lp = outQuart(prog(l,0.25,0.9));
+    logo.style.opacity = lp; logo.style.transform = `translateY(${lerp(40,0,lp)}px)`;
+    $('.mark',s).style.transform = `rotate(${lerp(-135,45,outQuart(prog(l,0.2,1.1)))}deg)`;
+    fadeUp($('.tagline',s), t, S.s2[0]+0.9, 0.9, 20);
+    // photo mosaic: two staggered columns drifting upward
+    const pos = [[0,90],[470,20],[0,413],[470,343],[0,736],[470,666]];
+    $$('.ph', s).forEach((ph,i)=>{
+      const st = 0.35 + i*0.22;
+      const p = outQuart(prog(l,st,1.0));
+      const drift = -l*14 * (i%2 ? 1.25 : 1);
+      ph.style.left = pos[i][0]+'px';
+      ph.style.top = (pos[i][1] + lerp(160,0,p) + drift)+'px';
+      ph.style.opacity = p;
+      $('img',ph).style.transform = `scale(${lerp(1.18,1.04,p) - l*0.004})`;
+    });
+    const mq = $('.marquee', s);
+    const mp = outQuart(prog(l,1.2,0.8));
+    mq.style.transform = `translateY(${lerp(100,0,mp)}px)`;
+    $('.marquee-track', s).style.transform = `translateX(${-l*95}px)`;
+  }
+
+  // ---- scene 3 ----
+  {
+    const s = $('#s3'), l = t - S.s3[0];
+    fadeUp($('.kicker',s), t, S.s3[0]+0.3, 0.7, 14);
+    $$('h2 .line > span', s).forEach((el,i)=>rise(el, l, 0.4+i*0.16, 0.95));
+    $$('.card', s).forEach((c,i)=>{
+      const st = 1.65 + i*0.55;
+      const p = outQuart(prog(l,st,0.9));
+      c.style.opacity = p;
+      c.style.transform = `translateY(${lerp(70,0,p)}px)`;
+    });
+    // spotlight on #03 — the boldest promise
+    const hp = inOut(prog(l,3.9,0.6));
+    const c3 = $$('.card', s)[2];
+    c3.style.borderColor = `rgba(138,107,6,${hp})`;
+    c3.style.boxShadow = `0 ${lerp(0,26,hp)}px ${lerp(0,48,hp)}px rgba(13,15,19,${0.10*hp})`;
+    if (l>3.9) c3.style.transform = `translateY(${-8*hp}px)`;
+  }
+
+  // ---- scene 4 ----
+  {
+    const s = $('#s4'), l = t - S.s4[0];
+    $$('.claim .line > span', s).forEach((el,i)=>rise(el, l, 0.3+i*0.13, 0.95));
+    $('.claim',s).style.transform = `scale(${lerp(1,1.02,prog(l,0,3.2))})`;
+    $('.claim',s).style.transformOrigin = 'left center';
+  }
+
+  // ---- scene 5 ----
+  {
+    const s = $('#s5'), l = t - S.s5[0];
+    $$('.spin', s).forEach(g=>g.setAttribute('transform',`rotate(${t*6} 620 260)`));
+    const logo = $('.logo', s);
+    const lp = outQuart(prog(l,0.3,1.0));
+    logo.style.opacity = lp; logo.style.transform = `translateY(${lerp(40,0,lp)}px)`;
+    $('.mark',s).style.transform = `rotate(${lerp(-135,45,outQuart(prog(l,0.25,1.2)))}deg)`;
+    fadeUp($('.eyebrow',s), t, S.s5[0]+0.8, 0.8, 18);
+    fadeUp($('.btn-row',s), t, S.s5[0]+1.15, 0.8, 18);
+    // cursor glides to the button and clicks
+    const btn = $('.btn', s), cur = $('.cursor', s);
+    const r = btn.getBoundingClientRect();
+    const tx = r.left + r.width*0.86, ty = r.top + r.height*0.62;
+    const mp = inOut(prog(l,1.55,0.85));
+    cur.style.left = lerp(1500, tx, mp)+'px';
+    cur.style.top = lerp(1010, ty, mp)+'px';
+    cur.style.opacity = prog(l,1.45,0.25);
+    const press = prog(l,2.45,0.12) - prog(l,2.57,0.18);
+    btn.style.transform = `scale(${1-0.04*press})`;
+    cur.style.transform = `scale(${1-0.12*press})`;
+    const on = prog(l,2.5,0.2);
+    btn.style.background = on>0.5 ? '#FAF8F3' : '#F0B90B';
+    btn.style.borderColor = on>0.5 ? '#FAF8F3' : '#F0B90B';
+  }
+};
+
+window.ready = (async ()=>{
+  await document.fonts.ready;
+  await Promise.all([...document.images].map(i=>i.decode().catch(()=>{})));
+  // ensure every weight actually loaded
+  await Promise.all(['800 40px Unbounded','700 40px Unbounded','600 40px Montserrat','700 40px Montserrat'].map(f=>document.fonts.load(f,'РЕШЕНО Aa')));
+  return true;
+})();
+</script>
+</body>
+</html>
