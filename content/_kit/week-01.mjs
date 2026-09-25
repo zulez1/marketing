@@ -45,7 +45,7 @@ export const specs = [
   // ================= ВТ 29.09 — организатор =================
   { out: `${IG}/2-vt-29.09-rils-organizator/oblozhka.png`, size: 'S', theme: 'ink', bottom: false, blocks: [
     { type: 'display', lines: ['Зачем', 'мы делаем', { t: 'РЕШЕНО', c: 'acc' }] }, { type: 'gap', s: 'm' },
-    { type: 'p', html: 'Андрей Коломеец,<br>президент Ассоциации руководителей футбольных школ' } ] },
+    { type: 'p', html: 'Руслан Прокопьев,<br>организатор форума РЕШЕНО' } ] },
   { out: `${IG}/stories/2-vt-29.09-a-gotovim.png`, size: 'S', theme: 'ink', blocks: [
     { type: 'sticker', h: 900, text: 'место для фото команды<br>или рабочего процесса' }, { type: 'gap', s: 'm' },
     { type: 'display', lines: ['Готовим', { t: 'РЕШЕНО', c: 'acc' }] } ] },
