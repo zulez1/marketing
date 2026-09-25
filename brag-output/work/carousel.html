@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="fonts-local.css">
+<style>
+  :root{--ink:#0D0F13;--ink-soft:#585D66;--paper:#F3F0E8;--paper-raised:#FAF8F3;--amber:#F0B90B;--amber-deep:#8A6B06;--line:#DAD5C6;--line-dark:#2B2E35;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{width:1080px;height:1350px;overflow:hidden;}
+  body{font-family:'Montserrat',sans-serif;-webkit-font-smoothing:antialiased;}
+  .slide{position:absolute;inset:0;display:none;overflow:hidden;padding:90px;}
+  .slide.on{display:block;}
+  .ink{background:var(--ink);color:var(--paper-raised);}
+  .paper{background:var(--paper);color:var(--ink);}
+  .amber{background:var(--amber);color:var(--ink);}
+  .display{font-family:'Unbounded',sans-serif;font-weight:800;text-transform:uppercase;line-height:1.02;}
+  .fit{display:block;width:max-content;white-space:nowrap;margin-bottom:0.04em;}
+  .top{position:absolute;left:90px;right:90px;top:80px;display:flex;justify-content:space-between;align-items:center;}
+  .logo{display:flex;align-items:center;gap:16px;font-family:'Unbounded',sans-serif;}
+  .mark{width:20px;height:20px;background:var(--amber);border-radius:5px;transform:rotate(45deg);}
+  .amber .mark{background:var(--ink);}
+  .logo b{font-weight:800;font-size:30px;text-transform:uppercase;}
+  .logo small{font-weight:700;font-size:15px;letter-spacing:0.04em;text-transform:uppercase;color:var(--amber);display:block;margin-top:4px;}
+  .paper .logo small{color:var(--amber-deep);} .amber .logo small{color:var(--ink);}
+  .count{font-family:'Unbounded',sans-serif;font-weight:700;font-size:24px;opacity:0.55;}
+  .bottom{position:absolute;left:90px;right:90px;bottom:80px;display:flex;justify-content:space-between;align-items:center;font-size:26px;font-weight:600;}
+  .muted{opacity:0.6;}
+  .tag{display:inline-block;font-family:'Unbounded',sans-serif;font-weight:700;text-transform:uppercase;font-size:30px;padding:14px 30px;border-radius:999px;}
+  .ink .tag{background:var(--amber);color:var(--ink);}
+  .paper .tag{background:rgba(240,185,11,0.18);color:var(--amber-deep);}
+  .amber .tag{background:var(--ink);color:var(--amber);}
+  .num{font-family:'Unbounded',sans-serif;font-weight:800;font-size:250px;line-height:0.8;position:absolute;right:70px;top:170px;opacity:0.1;}
+  .body{position:absolute;left:90px;right:90px;}
+  .session{border-radius:28px;padding:36px 40px;}
+  .label{margin:70px 0 20px;font-size:24px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;opacity:0.6;}
+  .ink .session{background:#16181D;border:1.5px solid var(--line-dark);}
+  .paper .session{background:var(--paper-raised);border:1.5px solid var(--line);}
+  .amber .session{background:rgba(13,15,19,0.08);border:1.5px solid rgba(13,15,19,0.25);}
+  .session .when{font-size:24px;font-weight:700;letter-spacing:0.03em;text-transform:uppercase;margin-bottom:14px;opacity:0.65;}
+  .session .title{font-size:38px;font-weight:700;line-height:1.25;}
+  .halftone{position:absolute;inset:0;background-image:radial-gradient(circle, rgba(255,255,255,0.14) 1.5px, transparent 2px);background-size:11px 11px;opacity:0.45;
+    -webkit-mask-image:radial-gradient(ellipse 80% 55% at 85% 15%, black 10%, transparent 70%);mask-image:radial-gradient(ellipse 80% 55% at 85% 15%, black 10%, transparent 70%);}
+  .arrow{display:inline-flex;align-items:center;gap:14px;font-family:'Unbounded',sans-serif;font-weight:700;font-size:26px;text-transform:uppercase;}
+  .arrow i{font-style:normal;display:inline-flex;width:64px;height:64px;border-radius:50%;background:var(--amber);color:var(--ink);align-items:center;justify-content:center;font-size:30px;}
+  .btn{display:flex;align-items:center;justify-content:center;height:120px;border-radius:20px;background:var(--amber);color:var(--ink);font-weight:800;font-size:44px;}
+  .photo{position:absolute;left:90px;right:90px;height:420px;border-radius:26px;overflow:hidden;}
+  .photo img{width:100%;height:100%;object-fit:cover;}
+</style>
+</head>
+<body>
+
+<!-- 1 cover -->
+<section class="slide ink" id="s1">
+  <div class="halftone"></div>
+  <div class="top"><div class="logo"><div class="mark"></div><div><b>Решено</b><small>Business Live</small></div></div><span class="count">13–14.11 · Москва</span></div>
+  <div class="body" style="top:330px">
+    <div class="display fitbox"><span class="fit" style="color:var(--amber)">5 вопросов,</span><span class="fit">которые важны</span><span class="fit">любому</span><span class="fit">собственнику</span></div>
+    <p style="margin-top:50px;font-size:34px;font-weight:600;color:#C9CBD1;line-height:1.4;max-width:24ch">спортивного бизнеса — и где на форуме их разбирают</p>
+  </div>
+  <div class="bottom"><span class="muted">Форум владельцев и руководителей</span><span class="arrow">Листай <i>→</i></span></div>
+</section>
+
+<!-- 2-6 questions -->
+<section class="slide paper" id="s2">
+  <div class="top"><div class="logo"><div class="mark"></div><div><b>Решено</b><small>Business Live</small></div></div><span class="count">01 / 05</span></div>
+  <div class="num">01</div>
+  <div class="body" style="top:300px"><span class="tag">Money</span>
+    <div class="display fitbox" style="margin-top:44px"><span class="fit">Где мы</span><span class="fit">теряем</span><span class="fit" style="color:var(--amber-deep)">деньги?</span></div><div class="label">Разбираем на форуме</div><div class="session"><div class="when">13 ноября · 16:15 · Money</div><div class="title">Как увеличить прибыль без увеличения количества клиентов?</div></div></div>
+  <div class="bottom"><span class="muted">13–14 ноября 2026 · Москва</span><span class="arrow">→</span></div>
+</section>
+
+<section class="slide ink" id="s3">
+  <div class="halftone"></div>
+  <div class="top"><div class="logo"><div class="mark"></div><div><b>Решено</b><small>Business Live</small></div></div><span class="count">02 / 05</span></div>
+  <div class="num">02</div>
+  <div class="body" style="top:300px"><span class="tag">Client</span>
+    <div class="display fitbox" style="margin-top:44px"><span class="fit">Как привлекать</span><span class="fit">и удерживать</span><span class="fit" style="color:var(--amber)">клиентов?</span></div><div class="label">Разбираем на форуме</div><div class="session"><div class="when">13 ноября · 14:10 · Client</div><div class="title">Клиент больше не покупает просто тренировку</div></div></div>
+  <div class="bottom"><span class="muted">13–14 ноября 2026 · Москва</span><span class="arrow">→</span></div>
+</section>
+
+<section class="slide amber" id="s4">
+  <div class="top"><div class="logo"><div class="mark"></div><div><b>Решено</b><small>Business Live</small></div></div><span class="count">03 / 05</span></div>
+  <div class="num">03</div>
+  <div class="body" style="top:300px"><span class="tag">Team</span>
+    <div class="display fitbox" style="margin-top:44px"><span class="fit">Как построить</span><span class="fit">команду, которая</span><span class="fit">работает без</span><span class="fit">собственника?</span></div><div class="label">Разбираем на форуме</div><div class="session"><div class="when">14 ноября · 12:00 · Team</div><div class="title">Собственник устал: как построить бизнес, который работает без вас?</div></div></div>
+  <div class="bottom"><span class="muted">13–14 ноября 2026 · Москва</span><span class="arrow">→</span></div>
+</section>
+
+<section class="slide paper" id="s5">
+  <div class="top"><div class="logo"><div class="mark"></div><div><b>Решено</b><small>Business Live</small></div></div><span class="count">04 / 05</span></div>
+  <div class="num">04</div>
+  <div class="body" style="top:300px"><span class="tag">Growth</span>
+    <div class="display fitbox" style="margin-top:44px"><span class="fit">Как</span><span class="fit">масштабироваться</span><span class="fit">без потери</span><span class="fit" style="color:var(--amber-deep)">качества?</span></div><div class="label">Разбираем на форуме</div><div class="session"><div class="when">14 ноября · 10:45 · Owner vs Owner</div><div class="title">Франшиза или собственная сеть?</div></div></div>
+  <div class="bottom"><span class="muted">13–14 ноября 2026 · Москва</span><span class="arrow">→</span></div>
+</section>
+
+<section class="slide ink" id="s6">
+  <div class="halftone"></div>
+  <div class="top"><div class="logo"><div class="mark"></div><div><b>Решено</b><small>Business Live</small></div></div><span class="count">05 / 05</span></div>
+  <div class="num">05</div>
+  <div class="body" style="top:300px"><span class="tag">Future</span>
+    <div class="display fitbox" style="margin-top:44px"><span class="fit">Что изменит</span><span class="fit">спортивный бизнес</span><span class="fit">в ближайшие</span><span class="fit" style="color:var(--amber)">годы?</span></div><div class="label">Разбираем на форуме</div><div class="session"><div class="when">14 ноября · 14:40 · Future</div><div class="title">Что ИИ сделает со спортивным бизнесом?</div></div></div>
+  <div class="bottom"><span class="muted">13–14 ноября 2026 · Москва</span><span class="arrow">→</span></div>
+</section>
+
+<!-- 7 CTA -->
+<section class="slide ink" id="s7">
+  <div class="halftone"></div>
+  <div class="top"><div class="logo"><div class="mark"></div><div><b>Решено</b><small>Business Live</small></div></div><span class="count">13–14.11 · Москва</span></div>
+  <div class="photo" style="top:200px"><img src="img7.jpg"></div>
+  <div class="body" style="top:680px">
+    <div class="display fitbox"><span class="fit">Не просто послушать.</span><span class="fit" style="color:var(--amber)">Приехать решить.</span></div>
+    <p style="margin-top:30px;font-size:30px;font-weight:600;color:#C9CBD1;line-height:1.4">Стартовая цена — только для <b style="color:var(--paper-raised)">первых 50 участников</b>.</p>
+  </div>
+  <div class="body" style="bottom:90px"><div class="btn">Участвовать</div><p style="text-align:center;margin-top:22px;font-size:28px;font-weight:600;color:#C9CBD1">sportbusinessforum.netlify.app</p></div>
+</section>
+
+<!-- single post: Business Live call -->
+<section class="slide amber" id="p1">
+  <div class="top"><div class="logo"><div class="mark"></div><div><b>Решено</b><small>Business Live</small></div></div><span class="count">Signature-формат</span></div>
+  <div class="body" style="top:260px">
+    <div class="display fitbox"><span class="fit">Три бизнеса.</span><span class="fit">Три проблемы.</span><span class="fit">Три решения.</span></div>
+  </div>
+  <div class="body" style="top:720px;display:grid;gap:18px">
+    <div class="session"><div class="when">Business Live #1 · 13 ноября</div><div class="title">Почему этот бизнес не растёт?</div></div>
+    <div class="session"><div class="when">Business Live #2 · 14 ноября</div><div class="title">Где этот бизнес теряет деньги?</div></div>
+    <div class="session"><div class="when">Business Live #3 · 14 ноября</div><div class="title">Как вырасти в 3 раза?</div></div>
+  </div>
+</section>
+
+<script>
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+window.show=id=>{ $$('.slide').forEach(s=>s.classList.toggle('on',s.id===id)); };
+window.ready=(async()=>{
+  await document.fonts.ready;
+  await Promise.all(['800 40px Unbounded','700 40px Unbounded','600 40px Montserrat','700 40px Montserrat','800 40px Montserrat'].map(f=>document.fonts.load(f,'РЕШЕНО Aa')));
+  await Promise.all([...document.images].map(i=>i.decode().catch(()=>{})));
+  $$('.slide').forEach(s=>{ s.classList.add('on');
+    const fits=$$('.fit',s);
+    fits.forEach(el=>{ el.style.fontSize='100px'; });
+    // one size per block: the widest line fills 900px, capped so short blocks don't explode
+    const box=s.querySelector('.fitbox'); if(!box) { s.classList.remove('on'); return; }
+    const w=Math.max(...fits.map(e=>e.scrollWidth)); const size=Math.min(150,100*900/w);
+    fits.forEach(el=>el.style.fontSize=size+'px');
+    const lbl=s.querySelector('.label');
+    if(lbl){ const b=lbl.parentElement; const h=b.getBoundingClientRect().height; b.style.top=Math.round(170+(1350-170-170-h)/2)+'px'; }
+    s.classList.remove('on'); });
+  return true;
+})();
+</script>
+</body>
+</html>
