@@ -129,7 +129,7 @@ SCENES.intro={dur:6.0, build(root){
   s.logo=makeLogo(s.content,{size:200,x:0,y:330,center:true});
   const info=el('div','',s.content); info.style.cssText='position:absolute;left:0;right:0;top:690px;display:flex;flex-direction:column;align-items:center;gap:26px';
   s.rule=el('div','rule',info); s.rule.style.width='520px';
-  s.eyebrow=el('div','eyebrow',info,'<span class="dot"></span>13–14 ноября 2026 · Москва'); s.eyebrow.style.fontSize='32px';
+  s.eyebrow=el('div','eyebrow',info,'<span class="dot"></span>Форум владельцев и руководителей спортивного бизнеса'); s.eyebrow.style.fontSize='32px';
   s.mq=el('div','marquee',s.content); s.mq.style.top='996px';
   s.mq.innerHTML='<div class="track">'+Array(3).fill('<span>Деньги</span><span>Клиенты</span><span>Команда</span><span>Рост</span><span>Будущее</span><span>Business Live</span>').join('')+'</div>';
   s.w2=makeWave(root,['#0D0F13','#FAF8F3','#F0B90B']);
@@ -180,8 +180,7 @@ SCENES.outro={dur:20.0, build(root){
   s.logo=makeLogo(s.content,{size:118,x:140,y:130,subSize:32});
   s.tag=el('div','tagline',s.content,'Не просто послушать.<br><span style="color:var(--amber)">Приехать решить.</span>');
   s.tag.style.cssText+='position:absolute;left:140px;top:360px;font-size:46px';
-  s.eyebrow=el('div','eyebrow',s.content,'<span class="dot"></span>13–14 ноября 2026 · Москва'); s.eyebrow.style.cssText+='position:absolute;left:140px;top:510px;font-size:28px';
-  s.pill=el('div','pill',s.content,'sportbusinessforum.netlify.app'); s.pill.style.cssText+='position:absolute;left:140px;top:575px';
+  s.pill=el('div','pill',s.content,'sportbusinessforum.netlify.app'); s.pill.style.cssText+='position:absolute;left:140px;top:530px';
   // subscribe zone (YouTube places the round channel element here)
   s.subRing=el('div','',s.content); s.subRing.style.cssText='position:absolute;left:140px;top:690px;width:230px;height:230px';
   s.subRing.innerHTML='<svg viewBox="0 0 230 230" width="230" height="230"><circle cx="115" cy="115" r="108" fill="rgba(22,24,29,0.6)" stroke="#F0B90B" stroke-width="4" stroke-dasharray="10 12"/></svg>';
@@ -204,7 +203,7 @@ SCENES.outro={dur:20.0, build(root){
   driveStage(s.stage,t);
   driveLogo(s.logo,t,0.6);
   const up=(e,st,d=20)=>{ const p=outQuart(prog(t,st,0.7)); e.style.opacity=p; e.style.transform=`translateY(${lerp(d,0,p)}px)`; };
-  up(s.tag,1.3); up(s.eyebrow,1.5); up(s.pill,1.65);
+  up(s.tag,1.3); up(s.pill,1.55);
   const rp=outBack(prog(t,1.6,0.6)); s.subRing.style.transform=`scale(${rp}) rotate(${t*14}deg)`;
   up(s.subText,1.85);
   s.frames.forEach((fr,i)=>{
