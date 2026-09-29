@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../../content/_kit/fonts/fonts.css">
+<style>
+  :root{--ink:#0D0F13;--ink2:#16181D;--paper:#F3F0E8;--paper-raised:#FAF8F3;--amber:#F0B90B;--amber-deep:#8A6B06;--line-dark:#2B2E35;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{width:1920px;height:1080px;overflow:hidden;background:transparent;}
+  body{font-family:'Montserrat',sans-serif;-webkit-font-smoothing:antialiased;color:var(--paper-raised);}
+  .layer{position:absolute;inset:0;overflow:hidden;}
+  /* diagonal slabs: 2700 wide, skewed; x=0 covers the whole frame */
+  .slab{position:absolute;top:-200px;left:-420px;width:2760px;height:1480px;transform-origin:center;will-change:transform;}
+  .line{position:absolute;top:-200px;left:0;height:1480px;will-change:transform;}
+  .halftone{position:absolute;inset:0;background-image:radial-gradient(circle, rgba(255,255,255,0.13) 1.6px, transparent 2.1px);background-size:12px 12px;
+    -webkit-mask-image:radial-gradient(ellipse 70% 65% at 78% 30%, black 10%, transparent 70%);mask-image:radial-gradient(ellipse 70% 65% at 78% 30%, black 10%, transparent 70%);}
+  .arc{position:absolute;right:-6%;top:-18%;width:66%;height:136%;}
+  .logo{position:absolute;display:flex;align-items:center;}
+  .mark{background:var(--amber);border-radius:18%;flex-shrink:0;}
+  .ring{position:absolute;border-radius:50%;border:4px solid var(--amber);}
+  .word{font-family:'Unbounded',sans-serif;font-weight:800;text-transform:uppercase;line-height:1;display:flex;}
+  .word .ch{display:inline-block;overflow:hidden;padding-bottom:0.06em;}
+  .word .ch > span{display:inline-block;
+    background:linear-gradient(100deg,#FAF8F3 0%,#FAF8F3 42%,#FFF4C9 48%,#FFFFFF 50%,#FFF4C9 52%,#FAF8F3 58%,#FAF8F3 100%);
+    background-size:400% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .sub{font-family:'Unbounded',sans-serif;font-weight:700;text-transform:uppercase;color:var(--amber);white-space:nowrap;}
+  .rule{height:4px;background:var(--amber);border-radius:2px;transform-origin:left center;}
+  .eyebrow{font-weight:700;letter-spacing:0.04em;color:#C9CBD1;display:flex;align-items:center;gap:16px;white-space:nowrap;}
+  .eyebrow .dot{width:12px;height:12px;border-radius:50%;background:var(--amber);}
+  .marquee{position:absolute;left:0;right:0;height:84px;background:var(--amber);color:var(--ink);overflow:hidden;display:flex;align-items:center;}
+  .marquee .track{display:flex;white-space:nowrap;}
+  .marquee span{font-family:'Unbounded',sans-serif;font-weight:800;font-size:30px;text-transform:uppercase;padding:0 30px;}
+  .marquee span::after{content:'●';font-size:12px;margin-left:60px;vertical-align:middle;}
+  .frame{position:absolute;border-radius:20px;border:2px dashed rgba(250,248,243,0.22);display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:26px;letter-spacing:0.06em;text-transform:uppercase;color:rgba(250,248,243,0.35);background:rgba(22,24,29,0.55);}
+  .corner{position:absolute;width:44px;height:44px;border-color:var(--amber);border-style:solid;border-width:0;}
+  .tagline{font-family:'Unbounded',sans-serif;font-weight:800;text-transform:uppercase;line-height:1.08;}
+  .pill{display:inline-flex;align-items:center;gap:14px;padding:16px 28px;border-radius:999px;border:2px solid rgba(250,248,243,0.25);font-weight:700;font-size:26px;}
+  .sublabel{font-weight:700;font-size:24px;color:#C9CBD1;letter-spacing:0.02em;}
+  .fade{position:absolute;inset:0;background:var(--ink);opacity:0;}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)), prog=(t,a,d)=>clamp((t-a)/d), lerp=(a,b,x)=>a+(b-a)*x;
+const outExpo=x=>x>=1?1:1-Math.pow(2,-10*x), inExpo=x=>x<=0?0:Math.pow(2,10*x-10);
+const outQuart=x=>1-Math.pow(1-x,4), inOut=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const outBack=x=>{const c=1.6;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2);};
+const SK=-20; // skew angle of all slabs
+const OFF=2900;
+const el=(tag,cls,parent,html)=>{const e=document.createElement(tag); if(cls)e.className=cls; if(html!=null)e.innerHTML=html; parent.appendChild(e); return e;};
+
+// ---------- a wave: slabs sweep in (left→cover), later sweep out (cover→right) ----------
+function makeWave(parent, colors, lines=2){
+  const layer=el('div','layer',parent);
+  const ls=[]; for(let i=0;i<lines;i++){ const l=el('div','line',layer); l.style.width=(i?10:22)+'px'; l.style.background=i%2?'#FAF8F3':'#F0B90B'; ls.push(l); }
+  const slabs=colors.map(c=>{ const s=el('div','slab',layer); s.style.background=c; return s; });
+  return {layer, slabs, lines:ls};
+}
+// tIn: start of entry; tOut: start of exit (null = stay); order: last slab ends on top
+function driveWave(w,t,tIn,tOut,{stagger=0.075,dIn=0.55,dOut=0.6,dir=1}={}){
+  const n=w.slabs.length;
+  w.slabs.forEach((s,i)=>{
+    const a=outExpo(prog(t,tIn+i*stagger,dIn));
+    let x=lerp(-OFF*dir,0,a);
+    if(tOut!=null){ const b=inExpo(prog(t,tOut+(n-1-i)*stagger*0.8,dOut)); x+=lerp(0,OFF*dir,b); }
+    s.style.transform=`translateX(${x}px) skewX(${SK}deg)`;
+  });
+  // speed lines lead the entry and the exit
+  w.lines.forEach((l,i)=>{
+    const run=(st)=>{ const p=prog(t,st,0.42); return p>0&&p<1 ? lerp(-400,2400,inOut(p)) : null; };
+    let x=run(tIn-0.06+i*0.05); if(x==null&&tOut!=null) x=run(tOut-0.02+i*0.05);
+    l.style.display=x==null?'none':'block';
+    if(x!=null) l.style.transform=`translateX(${x*dir}px) skewX(${SK}deg)`;
+  });
+}
+
+// ---------- brand stage (ink, halftone, arc) ----------
+function makeStage(parent){
+  const L=el('div','layer',parent); L.style.background='var(--ink)';
+  el('div','halftone',L);
+  L.insertAdjacentHTML('beforeend',`<svg class="arc" viewBox="0 0 900 900"><defs><linearGradient id="af" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F0B90B" stop-opacity="0.9"/><stop offset="100%" stop-color="#F0B90B" stop-opacity="0"/></linearGradient></defs>
+    <g class="spin"><circle cx="620" cy="260" r="230" fill="none" stroke="url(#af)" stroke-width="1.6" stroke-dasharray="4 10"/></g>
+    <circle cx="620" cy="260" r="310" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+    <path d="M -120 780 C 200 640, 450 560, 1050 380" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.4"/></svg>`);
+  return L;
+}
+function driveStage(L,t){ L.querySelector('.spin').setAttribute('transform',`rotate(${t*8} 620 260)`); L.querySelector('.halftone').style.transform=`translate(${-t*6}px,${-t*3}px)`; }
+
+// ---------- logo lockup ----------
+function makeLogo(parent,{size=190,x,y,center=false,sub='Business Live',subSize=52}){
+  const g=el('div','',parent); g.style.position='absolute'; g.style.left=x+'px'; g.style.top=y+'px';
+  const row=el('div','logo',g); row.style.position='relative'; row.style.gap=(size*0.2)+'px';
+  const mw=size*0.34; const mark=el('div','mark',row); mark.style.width=mark.style.height=mw+'px';
+  const ring=el('div','ring',row); ring.style.width=ring.style.height=(mw*1.6)+'px';
+  const col=el('div','',row);
+  const word=el('div','word',col); word.style.fontSize=size+'px';
+  'РЕШЕНО'.split('').forEach(c=>{ const s=el('span','ch',word); el('span','',s,c); });
+  const subEl=el('div','sub',col,sub); subEl.style.fontSize=subSize+'px'; subEl.style.marginTop=(size*0.1)+'px';
+  if(center){ g.style.left='0'; g.style.right='0'; g.style.display='flex'; g.style.justifyContent='center'; }
+  return {g,row,mark,ring,word,sub:subEl,mw};
+}
+function driveLogo(L,t,t0){
+  const m=outBack(prog(t,t0,0.55));
+  L.mark.style.transform=`rotate(${lerp(-315,45,outQuart(prog(t,t0,0.7)))}deg) scale(${m})`;
+  const rp=prog(t,t0+0.22,0.7);
+  L.ring.style.left=(L.mw/2-L.mw*0.8)+'px'; L.ring.style.top='50%'; L.ring.style.marginTop=(-L.mw*0.8)+'px';
+  L.ring.style.opacity=rp>0&&rp<1?(1-rp)*0.9:0; L.ring.style.transform=`scale(${lerp(0.4,2.6,outQuart(rp))})`;
+  [...L.word.querySelectorAll('.ch > span')].forEach((s,i)=>{
+    const p=outExpo(prog(t,t0+0.18+i*0.05,0.6));
+    s.style.transform=`translateY(${lerp(110,0,p)}%)`;
+    // glint sweeps across the word
+    const gp=prog(t,t0+1.25,0.9); s.style.backgroundPosition=`${lerp(100,-10,inOut(gp))+i*2}% 0`;
+  });
+  const sp=outQuart(prog(t,t0+0.55,0.8));
+  L.sub.style.opacity=sp; L.sub.style.letterSpacing=lerp(0.6,0.05,sp)+'em';
+}
+
+// ================= scenes =================
+const SCENES={};
+
+// ---- INTRO (6s): wave covers → logo → second wave → reveal (transparent) ----
+SCENES.intro={dur:6.0, build(root){
+  const s={};
+  s.w1=makeWave(root,['#8A6B06','#F0B90B','#FAF8F3','#0D0F13']);
+  s.stage=makeStage(root);
+  s.content=el('div','layer',root);
+  s.logo=makeLogo(s.content,{size:200,x:0,y:330,center:true});
+  const info=el('div','',s.content); info.style.cssText='position:absolute;left:0;right:0;top:690px;display:flex;flex-direction:column;align-items:center;gap:26px';
+  s.rule=el('div','rule',info); s.rule.style.width='520px';
+  s.eyebrow=el('div','eyebrow',info,'<span class="dot"></span>13–14 ноября 2026 · Москва'); s.eyebrow.style.fontSize='32px';
+  s.mq=el('div','marquee',s.content); s.mq.style.top='996px';
+  s.mq.innerHTML='<div class="track">'+Array(3).fill('<span>Деньги</span><span>Клиенты</span><span>Команда</span><span>Рост</span><span>Будущее</span><span>Business Live</span>').join('')+'</div>';
+  s.w2=makeWave(root,['#0D0F13','#FAF8F3','#F0B90B']);
+  return s;
+}, drive(s,t){
+  driveWave(s.w1,t,0.0,null);
+  const covered=t>=0.55 && t<5.05;
+  s.stage.style.display=s.content.style.display=covered?'block':'none';
+  s.w1.layer.style.display=t<5.05?'block':'none';
+  driveStage(s.stage,t);
+  driveLogo(s.logo,t,0.62);
+  s.rule.style.transform=`scaleX(${outExpo(prog(t,1.55,0.8))})`;
+  const e=outQuart(prog(t,1.75,0.7)); s.eyebrow.style.opacity=e; s.eyebrow.style.transform=`translateY(${lerp(20,0,e)}px)`;
+  s.mq.style.transform=`translateY(${lerp(90,0,outQuart(prog(t,1.9,0.6)))}px)`;
+  s.mq.firstChild.style.transform=`translateX(${-t*120}px)`;
+  // content drifts forward before the exit wave
+  const push=prog(t,4.3,0.8); s.logo.g.style.transform=`scale(${1+0.02*prog(t,1,3.3)+0.05*inExpo(push)})`;
+  // second wave: covers at ~4.8, sweeps away from 5.1 revealing what's underneath
+  driveWave(s.w2,t,4.45,5.1,{dOut:0.55});
+  s.w2.layer.style.display=t>=4.3?'block':'none';
+}};
+
+// ---- STINGER (1.6s): cover → logo flash → reveal. Cut under it at 0.80s ----
+SCENES.stinger={dur:1.6, build(root){
+  const s={};
+  s.w=makeWave(root,['#8A6B06','#F0B90B','#FAF8F3','#0D0F13'],3);
+  s.content=el('div','layer',root);
+  const box=el('div','',s.content); box.style.cssText='position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:40px';
+  s.mark=el('div','mark',box); s.mark.style.width=s.mark.style.height='90px';
+  s.word=el('div','word',box); s.word.style.fontSize='150px';
+  'РЕШЕНО'.split('').forEach(c=>{ const x=el('span','ch',s.word); el('span','',x,c); });
+  return s;
+}, drive(s,t){
+  driveWave(s.w,t,0.0,0.98,{stagger:0.06,dIn:0.5,dOut:0.5});
+  const vis=t>=0.42 && t<1.05; s.content.style.display=vis?'block':'none';
+  const p=outBack(prog(t,0.45,0.35));
+  s.mark.style.transform=`rotate(${lerp(-135,45,outQuart(prog(t,0.45,0.4)))}deg) scale(${p})`;
+  [...s.word.querySelectorAll('.ch > span')].forEach((x,i)=>{ const q=outExpo(prog(t,0.5+i*0.03,0.4)); x.style.transform=`translateY(${lerp(110,0,q)}%)`; x.style.backgroundPosition=`${lerp(100,-10,prog(t,0.62,0.4))}% 0`; });
+  const out=prog(t,0.9,0.12); s.content.style.opacity=1-out;
+}};
+
+// ---- OUTRO (20s): end screen with room for YouTube end-screen elements ----
+SCENES.outro={dur:20.0, build(root){
+  const s={};
+  s.w=makeWave(root,['#8A6B06','#F0B90B','#FAF8F3','#0D0F13']);
+  s.stage=makeStage(root);
+  s.content=el('div','layer',root);
+  s.logo=makeLogo(s.content,{size:118,x:140,y:130,subSize:32});
+  s.tag=el('div','tagline',s.content,'Не просто послушать.<br><span style="color:var(--amber)">Приехать решить.</span>');
+  s.tag.style.cssText+='position:absolute;left:140px;top:360px;font-size:46px';
+  s.eyebrow=el('div','eyebrow',s.content,'<span class="dot"></span>13–14 ноября 2026 · Москва'); s.eyebrow.style.cssText+='position:absolute;left:140px;top:510px;font-size:28px';
+  s.pill=el('div','pill',s.content,'sportbusinessforum.netlify.app'); s.pill.style.cssText+='position:absolute;left:140px;top:575px';
+  // subscribe zone (YouTube places the round channel element here)
+  s.subRing=el('div','',s.content); s.subRing.style.cssText='position:absolute;left:140px;top:690px;width:230px;height:230px';
+  s.subRing.innerHTML='<svg viewBox="0 0 230 230" width="230" height="230"><circle cx="115" cy="115" r="108" fill="rgba(22,24,29,0.6)" stroke="#F0B90B" stroke-width="4" stroke-dasharray="10 12"/></svg>';
+  s.subText=el('div','',s.content,'<div style="font-family:Unbounded;font-weight:800;font-size:34px;text-transform:uppercase">Подписывайтесь</div><div class="sublabel" style="margin-top:10px">Разбираем спортивный бизнес<br>без воды</div>');
+  s.subText.style.cssText+='position:absolute;left:410px;top:745px';
+  // two video slots on the right (16:9)
+  s.frames=[[1080,150,'Смотрите далее'],[1080,590,'Ещё видео']].map(([x,y,label])=>{
+    const f=el('div','frame',s.content,label); f.style.left=x+'px'; f.style.top=y+'px'; f.style.width='700px'; f.style.height='394px';
+    const cs=[['left:-2px;top:-2px','border-left-width:6px;border-top-width:6px;border-top-left-radius:20px'],['right:-2px;top:-2px','border-right-width:6px;border-top-width:6px;border-top-right-radius:20px'],['left:-2px;bottom:-2px','border-left-width:6px;border-bottom-width:6px;border-bottom-left-radius:20px'],['right:-2px;bottom:-2px','border-right-width:6px;border-bottom-width:6px;border-bottom-right-radius:20px']]
+      .map(([p,b])=>{ const c=el('div','corner',f); c.style.cssText+=p+';'+b; return c; });
+    return {f,cs};
+  });
+  s.mq=el('div','marquee',s.content); s.mq.style.top='1010px'; s.mq.style.height='70px';
+  s.mq.innerHTML='<div class="track">'+Array(6).fill('<span>Деньги</span><span>Клиенты</span><span>Команда</span><span>Рост</span><span>Будущее</span><span>Business Live</span><span>Business Match</span><span>Owner Tables</span>').join('')+'</div>';
+  s.fade=el('div','fade',root);
+  return s;
+}, drive(s,t){
+  driveWave(s.w,t,0.0,null);
+  const on=t>=0.55; s.stage.style.display=s.content.style.display=on?'block':'none';
+  driveStage(s.stage,t);
+  driveLogo(s.logo,t,0.6);
+  const up=(e,st,d=20)=>{ const p=outQuart(prog(t,st,0.7)); e.style.opacity=p; e.style.transform=`translateY(${lerp(d,0,p)}px)`; };
+  up(s.tag,1.3); up(s.eyebrow,1.5); up(s.pill,1.65);
+  const rp=outBack(prog(t,1.6,0.6)); s.subRing.style.transform=`scale(${rp}) rotate(${t*14}deg)`;
+  up(s.subText,1.85);
+  s.frames.forEach((fr,i)=>{
+    const p=outExpo(prog(t,1.0+i*0.18,0.7)); fr.f.style.opacity=p; fr.f.style.transform=`translateX(${lerp(120,0,p)}px)`;
+    const breathe=0.55+0.45*Math.sin((t-1.8)*2.2+i*1.3)*0.5+0.225; fr.cs.forEach(c=>c.style.opacity=t>1.4?breathe:0);
+  });
+  s.mq.style.transform=`translateY(${lerp(80,0,outQuart(prog(t,1.3,0.6)))}px)`;
+  s.mq.firstChild.style.transform=`translateX(${-t*70}px)`;
+  s.fade.style.opacity=inOut(prog(t,19.4,0.6));
+}};
+
+let CUR;
+window.setup=name=>{ const root=document.getElementById('root'); root.innerHTML=''; CUR={sc:SCENES[name]}; CUR.s=CUR.sc.build(root); window.DURATION=CUR.sc.dur; };
+window.render=t=>CUR.sc.drive(CUR.s,t);
+window.ready=(async()=>{ await document.fonts.ready;
+  await Promise.all(['800 40px Unbounded','700 40px Unbounded','600 40px Montserrat','700 40px Montserrat'].map(f=>document.fonts.load(f,'РЕШЕНО Aa')));
+  return true; })();
+</script>
+</body>
+</html>
