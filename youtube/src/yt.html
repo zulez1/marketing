@@ -177,15 +177,14 @@ SCENES.outro={dur:20.0, build(root){
   s.w=makeWave(root,['#8A6B06','#F0B90B','#FAF8F3','#0D0F13']);
   s.stage=makeStage(root);
   s.content=el('div','layer',root);
-  s.logo=makeLogo(s.content,{size:118,x:140,y:130,subSize:32});
+  s.logo=makeLogo(s.content,{size:118,x:140,y:170,subSize:32});
   s.tag=el('div','tagline',s.content,'Не просто послушать.<br><span style="color:var(--amber)">Приехать решить.</span>');
-  s.tag.style.cssText+='position:absolute;left:140px;top:360px;font-size:46px';
-  s.pill=el('div','pill',s.content,'sportbusinessforum.netlify.app'); s.pill.style.cssText+='position:absolute;left:140px;top:530px';
+  s.tag.style.cssText+='position:absolute;left:140px;top:400px;font-size:46px';
   // subscribe zone (YouTube places the round channel element here)
-  s.subRing=el('div','',s.content); s.subRing.style.cssText='position:absolute;left:140px;top:690px;width:230px;height:230px';
+  s.subRing=el('div','',s.content); s.subRing.style.cssText='position:absolute;left:140px;top:610px;width:230px;height:230px';
   s.subRing.innerHTML='<svg viewBox="0 0 230 230" width="230" height="230"><circle cx="115" cy="115" r="108" fill="rgba(22,24,29,0.6)" stroke="#F0B90B" stroke-width="4" stroke-dasharray="10 12"/></svg>';
   s.subText=el('div','',s.content,'<div style="font-family:Unbounded;font-weight:800;font-size:34px;text-transform:uppercase">Подписывайтесь</div><div class="sublabel" style="margin-top:10px">Разбираем спортивный бизнес<br>без воды</div>');
-  s.subText.style.cssText+='position:absolute;left:410px;top:745px';
+  s.subText.style.cssText+='position:absolute;left:410px;top:665px';
   // two video slots on the right (16:9)
   s.frames=[[1080,150,'Смотрите далее'],[1080,590,'Ещё видео']].map(([x,y,label])=>{
     const f=el('div','frame',s.content,label); f.style.left=x+'px'; f.style.top=y+'px'; f.style.width='700px'; f.style.height='394px';
@@ -203,7 +202,7 @@ SCENES.outro={dur:20.0, build(root){
   driveStage(s.stage,t);
   driveLogo(s.logo,t,0.6);
   const up=(e,st,d=20)=>{ const p=outQuart(prog(t,st,0.7)); e.style.opacity=p; e.style.transform=`translateY(${lerp(d,0,p)}px)`; };
-  up(s.tag,1.3); up(s.pill,1.55);
+  up(s.tag,1.3);
   const rp=outBack(prog(t,1.6,0.6)); s.subRing.style.transform=`scale(${rp}) rotate(${t*14}deg)`;
   up(s.subText,1.85);
   s.frames.forEach((fr,i)=>{
