@@ -17,3 +17,4 @@ youtube/src/stills/
 youtube/src/node_modules
 youtube/*.wav
 reels/src/node_modules
+__pycache__/
