@@ -39,10 +39,12 @@ def cut(src, start, out_dur, dst, speed=1.0, z0=1.0, z1=1.08, pan=0.0, hdr=None)
         f"scale=w='trunc({W}*{z}/2)*2':h='trunc({H}*{z}/2)*2':eval=frame:flags=bicubic",
         f"crop={W}:{H}",
         "setsar=1",
+        "setparams=colorspace=bt709:color_primaries=bt709:color_trc=bt709:range=tv",
     ]
     cmd = ["ffmpeg", "-v", "error", "-y", "-ss", f"{start:.3f}", "-t", f"{src_dur:.3f}", "-i", src,
            "-an", "-vf", ",".join(chain), "-t", f"{out_dur:.4f}",
-           "-c:v", "libx264", "-preset", "veryfast", "-crf", "12", "-pix_fmt", "yuv420p", dst]
+           "-c:v", "libx264", "-preset", "veryfast", "-crf", "12", "-pix_fmt", "yuv420p",
+           "-colorspace", "bt709", "-color_primaries", "bt709", "-color_trc", "bt709", "-color_range", "tv", dst]
     subprocess.run(cmd, check=True)
 
 

@@ -60,8 +60,11 @@ os.makedirs(OUT, exist_ok=True)
 dst = f'{OUT}/bez-muzyki/{name}-bez-muzyki.mp4' if NOMUSIC else f'{OUT}/{name}.mp4'
 os.makedirs(os.path.dirname(dst), exist_ok=True)
 subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', f'{wd}/footage.mp4', '-framerate', '30', '-i', f'{fr}/f%04d.png', '-i', f'{wd}/music.wav',
-                '-filter_complex', '[0:v]tpad=stop_mode=clone:stop_duration=10[v];[v][1:v]overlay=format=auto,format=yuv420p[o]',
+                '-filter_complex', '[0:v]tpad=stop_mode=clone:stop_duration=10,scale=in_color_matrix=bt709:in_range=tv,format=gbrp[v];'
+                '[1:v]format=rgba[g];[v][g]overlay=format=rgb,scale=out_color_matrix=bt709:out_range=tv,format=yuv420p,'
+                'setparams=colorspace=bt709:color_primaries=bt709:color_trc=bt709:range=tv[o]',
                 '-map', '[o]', '-map', '2:a', '-t', f'{dur:.3f}', '-r', '30',
                 '-c:v', 'libx264', '-preset', 'slow', '-crf', '18', '-profile:v', 'high', '-pix_fmt', 'yuv420p',
+                '-colorspace', 'bt709', '-color_primaries', 'bt709', '-color_trc', 'bt709', '-color_range', 'tv',
                 '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', dst], check=True)
 print(dst, round(dur, 2), 's')
