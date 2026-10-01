@@ -1,0 +1,243 @@
+<title>Контент-план РЕШЕНО</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+/* layout: one working column — progress strip, filters, then a ledger of content rows with platform chips */
+:root{
+  --bg:#F3F0E8; --surface:#FAF8F3; --ink:#0D0F13; --muted:#5E626B; --line:#DAD5C6;
+  --accent:#F0B90B; --accent-ink:#0D0F13; --accent-deep:#8A6B06; --done:#2F7D4F; --done-bg:#E3F0E6; --todo-bg:#F6EBC7;
+  --display:'Unbounded', 'Arial Black', system-ui, sans-serif;
+  --body:'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0D0F13; --surface:#16181D; --ink:#FAF8F3; --muted:#A3A7AF; --line:#2B2E35;
+  --accent:#F0B90B; --accent-ink:#0D0F13; --accent-deep:#F0B90B; --done:#6FCF97; --done-bg:#16301F; --todo-bg:#3A3112; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#0D0F13; --surface:#16181D; --ink:#FAF8F3; --muted:#A3A7AF; --line:#2B2E35;
+  --accent:#F0B90B; --accent-ink:#0D0F13; --accent-deep:#F0B90B; --done:#6FCF97; --done-bg:#16301F; --todo-bg:#3A3112; color-scheme:dark }
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.45}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:16px;padding-block:28px 64px;display:grid;gap:22px}
+header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:12px}
+.mark{width:14px;height:14px;background:var(--accent);border-radius:3px;transform:rotate(45deg)}
+h1{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:clamp(22px,4vw,32px);line-height:1.05;margin:0;text-wrap:balance}
+.sub{color:var(--muted);margin:6px 0 0;max-width:60ch}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:grid;gap:8px}
+.stat .k{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.stat .v{font-family:var(--display);font-weight:600;font-size:20px;font-variant-numeric:tabular-nums}
+.bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent)}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:transparent;color:var(--ink);font:600 13px var(--body);padding:8px 14px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+select,input,textarea{font:500 14px var(--body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+.btn{font:700 14px var(--body);border-radius:10px;padding:9px 16px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:focus-visible,.chip:focus-visible,.seg button:focus-visible,.icon:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.spacer{flex:1}
+.list{display:grid;gap:8px}
+.group-h{font-family:var(--display);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin:12px 0 2px}
+.row{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center}
+.row.alldone{opacity:.62}
+.kind{font:700 11px var(--body);letter-spacing:.06em;text-transform:uppercase;padding:5px 9px;border-radius:999px;background:var(--todo-bg);color:var(--accent-deep);white-space:nowrap}
+.main{min-width:0;display:grid;gap:3px}
+.title{font-weight:700;font-size:15px}
+.meta{font-size:13px;color:var(--muted);overflow-wrap:anywhere}
+.chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}
+.chip{font:700 12px var(--body);border-radius:999px;padding:6px 10px;border:1px dashed var(--line);background:transparent;color:var(--muted);cursor:pointer;white-space:nowrap}
+.chip.todo{border-style:solid;border-color:var(--accent-deep);color:var(--accent-deep);background:var(--todo-bg)}
+.chip.done{border-style:solid;border-color:var(--done);color:var(--done);background:var(--done-bg)}
+.chip.done::before{content:"✓ "}
+.icon{border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:18px;line-height:1;padding:4px}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:14px;padding:28px;text-align:center;color:var(--muted)}
+dialog{border:1px solid var(--line);border-radius:16px;background:var(--surface);color:var(--ink);padding:20px;width:min(520px,calc(100vw - 32px))}
+dialog::backdrop{background:rgba(13,15,19,.45)}
+.form{display:grid;gap:12px}
+.form label{display:grid;gap:5px;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.plats{display:flex;flex-wrap:wrap;gap:12px;font-size:14px;text-transform:none;letter-spacing:0;color:var(--ink);font-weight:600}
+.actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+.note{font-size:13px;color:var(--muted)}
+.ro .chip,.ro .icon{cursor:default}
+@media (max-width:640px){ .row{grid-template-columns:1fr} .chips{justify-content:flex-start} }
+@media (prefers-reduced-motion: reduce){ *{transition:none!important} }
+</style>
+
+<div class="wrap" id="app">
+  <header>
+    <div>
+      <div class="brand"><span class="mark"></span><h1>Контент-план РЕШЕНО</h1></div>
+      <p class="sub">Задача сейчас — чтобы соцсети выглядели живыми. Очередь без жёстких дат: нажмите на площадку, когда пост выложен. Пунктир — площадка не нужна, жёлтая — надо выложить, зелёная — выложено.</p>
+    </div>
+    <button class="btn" id="addBtn" type="button">+ Добавить</button>
+  </header>
+
+  <section class="stats" id="stats" aria-label="Прогресс по площадкам"></section>
+
+  <div class="controls">
+    <div class="seg" role="group" aria-label="Статус">
+      <button type="button" data-f="todo" aria-pressed="true">Осталось</button>
+      <button type="button" data-f="all" aria-pressed="false">Все</button>
+      <button type="button" data-f="done" aria-pressed="false">Выложено</button>
+    </div>
+    <select id="platF" aria-label="Площадка">
+      <option value="">Все площадки</option>
+      <option value="tg">Telegram</option><option value="vk">VK</option><option value="ig">Instagram</option><option value="yt">YouTube</option><option value="chat">TG-чат</option>
+    </select>
+    <span class="spacer"></span>
+    <span class="note" id="status">Загружаю план…</span>
+  </div>
+
+  <section class="list" id="list" aria-live="polite">
+    <div class="empty">План загружается. Если ничего не появилось — нажмите «+ Добавить» и внесите первый пункт.</div>
+  </section>
+</div>
+
+<dialog id="dlg">
+  <form class="form" id="form" method="dialog">
+    <h2 style="margin:0;font-family:var(--display);font-size:18px;text-transform:uppercase" id="dlgTitle">Новый пункт</h2>
+    <label>Что выкладываем<input id="f_title" required maxlength="160" placeholder="Например: Рилс «Атмосфера форума»"></label>
+    <label>Формат
+      <select id="f_kind">
+        <option>Пост</option><option>Карусель</option><option>Рилс</option><option>Сторис</option><option>Видео</option><option>Опрос</option><option>Чат</option>
+      </select>
+    </label>
+    <label>Рубрика<input id="f_rubric" maxlength="60" placeholder="Манифест, 5 вопросов, Атмосфера…"></label>
+    <label>Где лежит / заметка<textarea id="f_note" rows="2" maxlength="400" placeholder="Папка в репозитории, ссылка, что доделать"></textarea></label>
+    <label>Площадки
+      <span class="plats">
+        <label><input type="checkbox" id="p_tg"> Telegram</label>
+        <label><input type="checkbox" id="p_vk"> VK</label>
+        <label><input type="checkbox" id="p_ig"> Instagram</label>
+        <label><input type="checkbox" id="p_yt"> YouTube</label>
+        <label><input type="checkbox" id="p_chat"> TG-чат</label>
+      </span>
+    </label>
+    <div class="actions">
+      <button class="btn ghost" type="button" id="delBtn" hidden>Удалить</button>
+      <span class="spacer"></span>
+      <button class="btn ghost" type="button" id="cancelBtn">Отмена</button>
+      <button class="btn" type="submit" id="saveBtn">Сохранить</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+const PLATS=[['tg','Telegram'],['vk','VK'],['ig','Instagram'],['yt','YouTube'],['chat','TG-чат']];
+const $=s=>document.querySelector(s);
+let items=[], filter='todo', platF='', db=null, canWrite=true, editing=null;
+
+function state(it){ const ch=it.ch||{}; const used=PLATS.filter(([k])=>ch[k]); const done=used.filter(([k])=>ch[k]==='done');
+  return {used, done, all: used.length>0 && done.length===used.length}; }
+
+function renderStats(){
+  const el=$('#stats'); el.innerHTML='';
+  const total=items.length, fully=items.filter(i=>state(i).all).length;
+  const card=(k,a,b)=>{ const d=document.createElement('div'); d.className='stat';
+    const pct=b?Math.round(a/b*100):0;
+    d.innerHTML=`<span class="k"></span><span class="v">${a} / ${b}</span><span class="bar"><i style="width:${pct}%"></i></span>`;
+    d.querySelector('.k').textContent=k; el.appendChild(d); };
+  card('Готово целиком',fully,total);
+  for(const [k,n] of PLATS){ const used=items.filter(i=>(i.ch||{})[k]); if(!used.length) continue;
+    card(n, used.filter(i=>i.ch[k]==='done').length, used.length); }
+}
+
+function render(){
+  renderStats();
+  const list=$('#list'); list.innerHTML='';
+  let rows=items.slice().sort((a,b)=>(a.order??1e9)-(b.order??1e9) || String(a.title).localeCompare(String(b.title),'ru'));
+  if(platF) rows=rows.filter(i=>(i.ch||{})[platF]);
+  rows=rows.filter(i=>{ const s=state(i);
+    if(filter==='todo') return platF ? i.ch[platF]!=='done' : !s.all;
+    if(filter==='done') return platF ? i.ch[platF]==='done' : s.all;
+    return true; });
+  if(!rows.length){ const e=document.createElement('div'); e.className='empty';
+    e.textContent = items.length ? (filter==='todo'?'Всё выложено. Добавьте новый пункт.':'Здесь пока пусто.') : 'План пуст — нажмите «+ Добавить».';
+    list.appendChild(e); return; }
+  let lastGroup=null;
+  for(const it of rows){
+    const g=it.group||'Без рубрики';
+    if(g!==lastGroup){ const h=document.createElement('div'); h.className='group-h'; h.textContent=g; list.appendChild(h); lastGroup=g; }
+    const s=state(it);
+    const r=document.createElement('article'); r.className='row'+(s.all?' alldone':'')+(canWrite?'':' ro');
+    r.innerHTML=`<span class="kind"></span><div class="main"><div class="title"></div><div class="meta"></div></div><div class="chips"></div>`;
+    r.querySelector('.kind').textContent=it.kind||'Пост';
+    r.querySelector('.title').textContent=it.title||'Без названия';
+    r.querySelector('.meta').textContent=[it.rubric,it.note].filter(Boolean).join(' · ');
+    const chips=r.querySelector('.chips');
+    for(const [k,n] of PLATS){ const v=(it.ch||{})[k]; if(!v) continue;
+      const b=document.createElement('button'); b.type='button'; b.className='chip '+v; b.textContent=n;
+      b.setAttribute('aria-pressed', v==='done'?'true':'false');
+      b.title = v==='done' ? 'Выложено — нажмите, чтобы снять отметку' : 'Нажмите, когда выложите';
+      b.onclick=()=>toggle(it,k); b.disabled=!canWrite; chips.appendChild(b); }
+    const ed=document.createElement('button'); ed.type='button'; ed.className='icon'; ed.textContent='✎'; ed.title='Изменить'; ed.setAttribute('aria-label','Изменить «'+(it.title||'')+'»');
+    ed.onclick=()=>openDlg(it); ed.hidden=!canWrite; chips.appendChild(ed);
+    list.appendChild(r);
+  }
+}
+
+async function toggle(it,k){
+  if(!db||!canWrite) return;
+  const next = it.ch[k]==='done' ? 'todo' : 'done';
+  const ch={...it.ch,[k]:next};
+  it.ch=ch; render();
+  try{ await db.doc('items/'+it.id).update({ch}); }
+  catch(e){ handleWriteErr(e); }
+}
+
+function openDlg(it){
+  editing=it||null;
+  $('#dlgTitle').textContent= it?'Изменить пункт':'Новый пункт';
+  $('#f_title').value=it?.title||''; $('#f_kind').value=it?.kind||'Пост';
+  $('#f_rubric').value=it?.rubric||''; $('#f_note').value=it?.note||'';
+  for(const [k] of PLATS) $('#p_'+k).checked=!!(it?.ch||{})[k] || (!it && (k==='tg'||k==='vk'||k==='ig'));
+  $('#delBtn').hidden=!it;
+  $('#dlg').showModal();
+}
+$('#cancelBtn').onclick=()=>$('#dlg').close();
+$('#addBtn').onclick=()=>openDlg(null);
+$('#form').addEventListener('submit', async ev=>{
+  ev.preventDefault(); if(!db) return;
+  const ch={}; for(const [k] of PLATS){ if($('#p_'+k).checked) ch[k] = (editing?.ch||{})[k]==='done' ? 'done' : 'todo'; }
+  const body={ title:$('#f_title').value.trim(), kind:$('#f_kind').value, rubric:$('#f_rubric').value.trim(), note:$('#f_note').value.trim(), ch };
+  if(!body.title) return;
+  $('#dlg').close();
+  try{
+    if(editing) await db.doc('items/'+editing.id).update(body);
+    else await db.collection('items').add({...body, group:'Добавлено вручную', order: Date.now()/1e9 + 1000});
+  }catch(e){ handleWriteErr(e); }
+});
+$('#delBtn').onclick=async()=>{
+  if(!editing||!db) return;
+  if($('#delBtn').dataset.armed!=='1'){ $('#delBtn').dataset.armed='1'; $('#delBtn').textContent='Точно удалить?'; return; }
+  $('#delBtn').dataset.armed=''; $('#delBtn').textContent='Удалить';
+  const id=editing.id; $('#dlg').close();
+  try{ await db.doc('items/'+id).delete(); }catch(e){ handleWriteErr(e); }
+};
+$('#dlg').addEventListener('close',()=>{ $('#delBtn').dataset.armed=''; $('#delBtn').textContent='Удалить'; });
+
+function handleWriteErr(e){
+  if(e && e.code==='invalid_argument'){ canWrite=false; $('#status').textContent='У вас доступ только на просмотр.'; $('#addBtn').hidden=true; render(); }
+  else $('#status').textContent='Не сохранилось, попробуйте ещё раз.';
+}
+
+document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{ filter=b.dataset.f;
+  document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed', x===b?'true':'false')); render(); });
+$('#platF').onchange=e=>{ platF=e.target.value; render(); };
+
+(async()=>{
+  db = await claude.use('db');
+  if(!db){ $('#status').textContent='План доступен после входа в Claude.'; $('#addBtn').hidden=true;
+    $('#list').innerHTML='<div class="empty">Откройте страницу, войдя в аккаунт Claude, чтобы видеть и отмечать план.</div>'; return; }
+  const user = await claude.use('user');
+  const cw = user ? await user.can('data.write') : null;
+  if(cw===false){ canWrite=false; $('#addBtn').hidden=true; }
+  db.collection('items').onSnapshot(snap=>{
+    items = snap.docs.map(d=>({id:d.id, ...d.data()}));
+    $('#status').textContent = items.length ? `Пунктов: ${items.length}` : 'План пуст';
+    render();
+  }, err=>{ $('#status').textContent='Связь с планом потеряна — обновите страницу.'; });
+})();
+</script>
