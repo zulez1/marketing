@@ -18,6 +18,8 @@ OUT = '/home/user/marketing/reels'
 
 spec = json.load(open(sys.argv[1]))
 name = spec['name']; beat = 60.0 / spec['bpm']
+NOMUSIC = os.environ.get('NOMUSIC') == '1'
+style = 'none' if NOMUSIC else spec.get('style', 'house')
 wd = f'{WORK}/{name}'; os.makedirs(wd, exist_ok=True)
 
 # ---- timeline ----
@@ -51,11 +53,12 @@ fr = f'{wd}/ov'; shutil.rmtree(fr, ignore_errors=True)
 subprocess.run(['node', 'cap_overlay.mjs', f'{wd}/overlay.json', fr], check=True)
 
 # ---- music ----
-make_track(f'{wd}/music.wav', spec['bpm'], dur, cuts=cuts[1:], outro=outro, seed=spec.get('seed', 1), flashes=flashes, style=spec.get('style', 'house'))
+make_track(f'{wd}/music.wav', spec['bpm'], dur, cuts=cuts[1:], outro=outro, seed=spec.get('seed', 1), flashes=flashes, style=style)
 
 # ---- final ----
 os.makedirs(OUT, exist_ok=True)
-dst = f'{OUT}/{name}.mp4'
+dst = f'{OUT}/bez-muzyki/{name}-bez-muzyki.mp4' if NOMUSIC else f'{OUT}/{name}.mp4'
+os.makedirs(os.path.dirname(dst), exist_ok=True)
 subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', f'{wd}/footage.mp4', '-framerate', '30', '-i', f'{fr}/f%04d.png', '-i', f'{wd}/music.wav',
                 '-filter_complex', '[0:v]tpad=stop_mode=clone:stop_duration=10[v];[v][1:v]overlay=format=auto,format=yuv420p[o]',
                 '-map', '[o]', '-map', '2:a', '-t', f'{dur:.3f}', '-r', '30',

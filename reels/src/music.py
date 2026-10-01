@@ -230,12 +230,16 @@ def style_tension(T, beat, end, prog):
     return {'drums': 0.6, 'ticks': 0.12, 'bass': 0.36, 'pad': 0.16, 'lead': 0.16}
 
 
-STYLES = {'house': style_house, 'trap': style_trap, 'epic': style_epic, 'tension': style_tension}
+def style_none(T, beat, end, prog):
+    return {}
+
+
+STYLES = {'none': style_none, 'house': style_house, 'trap': style_trap, 'epic': style_epic, 'tension': style_tension}
 
 
 def make_track(path, bpm, dur, cuts=(), outro=None, seed=1, flashes=(), style='house'):
     T = Track(dur, seed); beat = 60 / bpm; bar = 4 * beat
-    prog = PROGS[style]; end = outro if outro else dur
+    prog = PROGS.get(style, PROGS['house']); end = outro if outro else dur
     chord = lambda t: prog[int(t // bar) % 4]
     gains = STYLES[style](T, beat, end, prog)
 
@@ -246,13 +250,18 @@ def make_track(path, bpm, dur, cuts=(), outro=None, seed=1, flashes=(), style='h
             for k in range(1, 10): x += np.sin(2 * np.pi * hz(m + 12) * k * t) / k * (0.7 if k % 2 else 1)
         return lp(x, bright) * np.minimum(1, t / 0.003) * np.exp(-t * (9 if length < 1 else 1.6))
     hit = (lambda t0: T.braam(chord(t0 + 0.01)[1], 1.6)) if style == 'epic' else (lambda t0: stab(t0))
-    T.add('sfx', T.boom(), 0.0, 0.7); T.add('stab', hit(0.0), 0.0, 1.0)
+    musical = style != 'none'
+    T.add('sfx', T.boom(), 0.0, 0.7)
+    if musical: T.add('stab', hit(0.0), 0.0, 1.0)
     for c in cuts:
         if c in flashes and c < end:
-            T.add('stab', hit(c), c, 1.0); T.add('sfx', T.riser(0.45), c - 0.45, 0.14); T.add('sfx', T.boom(), c, 0.35)
+            T.add('sfx', T.riser(0.45), c - 0.45, 0.14); T.add('sfx', T.boom(), c, 0.35)
+            if musical: T.add('stab', hit(c), c, 1.0)
+        elif not musical and c < end:
+            T.add('sfx', T.whoosh(0.3), c - 0.15, 0.12)
     if outro:
         T.add('sfx', T.whoosh(0.7), outro - 0.15, 0.4); T.add('sfx', T.boom(), outro + 0.4, 0.8)
-        T.add('stab', stab(outro + 0.4, 3.0, 5200), outro + 0.4, 1.2)
+        if musical: T.add('stab', stab(outro + 0.4, 3.0, 5200), outro + 0.4, 1.2)
         if style == 'epic': T.add('stab', T.braam(chord(outro + 0.41)[1], 3.0), outro + 0.4, 0.8)
 
     N = T.N; groove_stop = np.ones(N)
