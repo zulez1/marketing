@@ -129,5 +129,6 @@
    "max": 175,
    "stagger": 0.35
   }
- ]
+ ],
+ "style": "trap"
 }

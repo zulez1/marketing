@@ -1,20 +1,133 @@
-{"name":"reel3-scena","bpm":120,"seed":3,"outro_beats":7,
- "shots":[
-  {"f":"IMG_2407.mov","in":3.0,"beats":4,"z0":1.0,"z1":1.15},
-  {"f":"IMG_2529.mov","in":4.0,"beats":2,"z0":1.12,"z1":1.0,"flash":true},
-  {"f":"IMG_2456.mov","in":6.0,"beats":2,"z0":1.0,"z1":1.1},
-  {"f":"IMG_2404.mov","in":7.0,"beats":2,"z0":1.1,"z1":1.0},
-  {"f":"IMG_2417.mov","in":4.0,"beats":2,"z0":1.0,"z1":1.12},
-  {"f":"IMG_2378.mov","in":5.0,"beats":2,"z0":1.12,"z1":1.0,"flash":true},
-  {"f":"IMG_2530.mov","in":4.0,"beats":2,"z0":1.0,"z1":1.1},
-  {"f":"IMG_2490.mov","in":8.0,"beats":2,"z0":1.1,"z1":1.0},
-  {"f":"IMG_2556.mov","in":10.0,"beats":2,"z0":1.0,"z1":1.12},
-  {"f":"IMG_2563.mov","in":1.0,"beats":2,"z0":1.1,"z1":1.0,"flash":true},
-  {"f":"IMG_2392.mov","in":6.0,"beats":2,"z0":1.0,"z1":1.1},
-  {"f":"IMG_2401.mov","in":1.0,"beats":4,"speed":0.5,"z0":1.0,"z1":1.14}
+{
+ "name": "reel3-scena",
+ "bpm": 120,
+ "seed": 3,
+ "outro_beats": 7,
+ "shots": [
+  {
+   "f": "IMG_2407.mov",
+   "in": 3.0,
+   "beats": 4,
+   "z0": 1.0,
+   "z1": 1.15
+  },
+  {
+   "f": "IMG_2529.mov",
+   "in": 4.0,
+   "beats": 2,
+   "z0": 1.12,
+   "z1": 1.0,
+   "flash": true
+  },
+  {
+   "f": "IMG_2456.mov",
+   "in": 6.0,
+   "beats": 2,
+   "z0": 1.0,
+   "z1": 1.1
+  },
+  {
+   "f": "IMG_2404.mov",
+   "in": 7.0,
+   "beats": 2,
+   "z0": 1.1,
+   "z1": 1.0
+  },
+  {
+   "f": "IMG_2417.mov",
+   "in": 4.0,
+   "beats": 2,
+   "z0": 1.0,
+   "z1": 1.12
+  },
+  {
+   "f": "IMG_2378.mov",
+   "in": 5.0,
+   "beats": 2,
+   "z0": 1.12,
+   "z1": 1.0,
+   "flash": true
+  },
+  {
+   "f": "IMG_2530.mov",
+   "in": 4.0,
+   "beats": 2,
+   "z0": 1.0,
+   "z1": 1.1
+  },
+  {
+   "f": "IMG_2490.mov",
+   "in": 8.0,
+   "beats": 2,
+   "z0": 1.1,
+   "z1": 1.0
+  },
+  {
+   "f": "IMG_2556.mov",
+   "in": 10.0,
+   "beats": 2,
+   "z0": 1.0,
+   "z1": 1.12
+  },
+  {
+   "f": "IMG_2563.mov",
+   "in": 1.0,
+   "beats": 2,
+   "z0": 1.1,
+   "z1": 1.0,
+   "flash": true
+  },
+  {
+   "f": "IMG_2392.mov",
+   "in": 6.0,
+   "beats": 2,
+   "z0": 1.0,
+   "z1": 1.1
+  },
+  {
+   "f": "IMG_2401.mov",
+   "in": 1.0,
+   "beats": 4,
+   "speed": 0.5,
+   "z0": 1.0,
+   "z1": 1.14
+  }
  ],
- "texts":[
-  {"b0":0.0,"b1":4.0,"lines":["Минимум","сцены."],"uniform":true,"max":170},
-  {"b0":4.0,"b1":8.0,"lines":["<span class='box'>Максимум</span>","<span class='box'>разбора.</span>"],"uniform":true,"max":170},
-  {"b0":14.0,"b1":22.0,"kicker":"На сцене —","lines":["цифры,","ошибки,","<span class='acc'>результаты</span>"],"uniform":true,"max":150,"stagger":0.5,"pos":"bottom"}
- ]}
+ "texts": [
+  {
+   "b0": 0.0,
+   "b1": 4.0,
+   "lines": [
+    "Минимум",
+    "сцены."
+   ],
+   "uniform": true,
+   "max": 170
+  },
+  {
+   "b0": 4.0,
+   "b1": 8.0,
+   "lines": [
+    "<span class='box'>Максимум</span>",
+    "<span class='box'>разбора.</span>"
+   ],
+   "uniform": true,
+   "max": 170
+  },
+  {
+   "b0": 14.0,
+   "b1": 22.0,
+   "kicker": "На сцене —",
+   "lines": [
+    "цифры,",
+    "ошибки,",
+    "<span class='acc'>результаты</span>"
+   ],
+   "uniform": true,
+   "max": 150,
+   "stagger": 0.5,
+   "pos": "bottom"
+  }
+ ],
+ "style": "epic"
+}

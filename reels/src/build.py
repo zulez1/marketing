@@ -51,7 +51,7 @@ fr = f'{wd}/ov'; shutil.rmtree(fr, ignore_errors=True)
 subprocess.run(['node', 'cap_overlay.mjs', f'{wd}/overlay.json', fr], check=True)
 
 # ---- music ----
-make_track(f'{wd}/music.wav', spec['bpm'], dur, cuts=cuts[1:], outro=outro, seed=spec.get('seed', 1), flashes=flashes)
+make_track(f'{wd}/music.wav', spec['bpm'], dur, cuts=cuts[1:], outro=outro, seed=spec.get('seed', 1), flashes=flashes, style=spec.get('style', 'house'))
 
 # ---- final ----
 os.makedirs(OUT, exist_ok=True)

@@ -1,24 +1,170 @@
-{"name":"reel2-kak-eto-vyglyadit","bpm":120,"seed":2,"outro_beats":7,
- "shots":[
-  {"f":"IMG_2298.mov","in":2.0,"beats":2,"z0":1.0,"z1":1.12},
-  {"f":"IMG_2291.mov","in":4.0,"beats":2,"z0":1.1,"z1":1.0},
-  {"f":"IMG_2315.mov","in":2.0,"beats":2,"z0":1.0,"z1":1.1},
-  {"f":"IMG_2301.mov","in":3.0,"beats":2,"speed":0.5,"z0":1.0,"z1":1.12},
-  {"f":"IMG_2311.mov","in":5.5,"beats":2,"z0":1.12,"z1":1.0,"flash":true},
-  {"f":"IMG_2312.mov","in":5.0,"beats":2,"z0":1.0,"z1":1.1},
-  {"f":"IMG_2335.mov","in":5.0,"beats":2,"z0":1.1,"z1":1.0},
-  {"f":"IMG_2399.mov","in":2.0,"beats":2,"z0":1.0,"z1":1.1,"pan":-0.2},
-  {"f":"IMG_2407.mov","in":8.0,"beats":2,"z0":1.12,"z1":1.0},
-  {"f":"IMG_2467.mov","in":9.0,"beats":2,"z0":1.0,"z1":1.12,"flash":true},
-  {"f":"IMG_2468.mov","in":2.5,"beats":2,"speed":0.5,"z0":1.0,"z1":1.1},
-  {"f":"IMG_2313.mov","in":6.0,"beats":2,"z0":1.1,"z1":1.0,"flash":true},
-  {"f":"IMG_2320.mov","in":3.0,"beats":2,"z0":1.0,"z1":1.1},
-  {"f":"IMG_2573.mov","in":3.0,"beats":2,"z0":1.1,"z1":1.0},
-  {"f":"IMG_2570.mov","in":1.0,"beats":4,"speed":0.5,"z0":1.0,"z1":1.14}
+{
+ "name": "reel2-kak-eto-vyglyadit",
+ "bpm": 120,
+ "seed": 2,
+ "outro_beats": 7,
+ "shots": [
+  {
+   "f": "IMG_2298.mov",
+   "in": 2.0,
+   "beats": 2,
+   "z0": 1.0,
+   "z1": 1.12
+  },
+  {
+   "f": "IMG_2291.mov",
+   "in": 4.0,
+   "beats": 2,
+   "z0": 1.1,
+   "z1": 1.0
+  },
+  {
+   "f": "IMG_2315.mov",
+   "in": 2.0,
+   "beats": 2,
+   "z0": 1.0,
+   "z1": 1.1
+  },
+  {
+   "f": "IMG_2301.mov",
+   "in": 3.0,
+   "beats": 2,
+   "speed": 0.5,
+   "z0": 1.0,
+   "z1": 1.12
+  },
+  {
+   "f": "IMG_2311.mov",
+   "in": 5.5,
+   "beats": 2,
+   "z0": 1.12,
+   "z1": 1.0,
+   "flash": true
+  },
+  {
+   "f": "IMG_2312.mov",
+   "in": 5.0,
+   "beats": 2,
+   "z0": 1.0,
+   "z1": 1.1
+  },
+  {
+   "f": "IMG_2335.mov",
+   "in": 5.0,
+   "beats": 2,
+   "z0": 1.1,
+   "z1": 1.0
+  },
+  {
+   "f": "IMG_2399.mov",
+   "in": 2.0,
+   "beats": 2,
+   "z0": 1.0,
+   "z1": 1.1,
+   "pan": -0.2
+  },
+  {
+   "f": "IMG_2407.mov",
+   "in": 8.0,
+   "beats": 2,
+   "z0": 1.12,
+   "z1": 1.0
+  },
+  {
+   "f": "IMG_2467.mov",
+   "in": 9.0,
+   "beats": 2,
+   "z0": 1.0,
+   "z1": 1.12,
+   "flash": true
+  },
+  {
+   "f": "IMG_2468.mov",
+   "in": 2.5,
+   "beats": 2,
+   "speed": 0.5,
+   "z0": 1.0,
+   "z1": 1.1
+  },
+  {
+   "f": "IMG_2313.mov",
+   "in": 6.0,
+   "beats": 2,
+   "z0": 1.1,
+   "z1": 1.0,
+   "flash": true
+  },
+  {
+   "f": "IMG_2320.mov",
+   "in": 3.0,
+   "beats": 2,
+   "z0": 1.0,
+   "z1": 1.1
+  },
+  {
+   "f": "IMG_2573.mov",
+   "in": 3.0,
+   "beats": 2,
+   "z0": 1.1,
+   "z1": 1.0
+  },
+  {
+   "f": "IMG_2570.mov",
+   "in": 1.0,
+   "beats": 4,
+   "speed": 0.5,
+   "z0": 1.0,
+   "z1": 1.14
+  }
  ],
- "texts":[
-  {"b0":0.0,"b1":4.0,"lines":["Как это","<span class='box'>выглядит</span>"],"uniform":true,"max":160},
-  {"b0":14.0,"b1":18.0,"kicker":"Сцена","lines":["Только те,","кому есть","что показать"],"uniform":true,"max":120,"pos":"bottom"},
-  {"b0":18.0,"b1":22.0,"lines":["Вопросы","<span class='acc'>из зала</span>"],"uniform":true,"max":150,"pos":"bottom"},
-  {"b0":24.0,"b1":32.0,"kicker":"Business Match","lines":["Приехать","найти нужных","<span class='box'>людей</span>"],"uniform":true,"max":130,"pos":"bottom"}
- ]}
+ "texts": [
+  {
+   "b0": 0.0,
+   "b1": 4.0,
+   "lines": [
+    "Как это",
+    "<span class='box'>выглядит</span>"
+   ],
+   "uniform": true,
+   "max": 160
+  },
+  {
+   "b0": 14.0,
+   "b1": 18.0,
+   "kicker": "Сцена",
+   "lines": [
+    "Только те,",
+    "кому есть",
+    "что показать"
+   ],
+   "uniform": true,
+   "max": 120,
+   "pos": "bottom"
+  },
+  {
+   "b0": 18.0,
+   "b1": 22.0,
+   "lines": [
+    "Вопросы",
+    "<span class='acc'>из зала</span>"
+   ],
+   "uniform": true,
+   "max": 150,
+   "pos": "bottom"
+  },
+  {
+   "b0": 24.0,
+   "b1": 32.0,
+   "kicker": "Business Match",
+   "lines": [
+    "Приехать",
+    "найти нужных",
+    "<span class='box'>людей</span>"
+   ],
+   "uniform": true,
+   "max": 130,
+   "pos": "bottom"
+  }
+ ],
+ "style": "house"
+}
