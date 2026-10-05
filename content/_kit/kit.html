@@ -101,10 +101,11 @@ window.renderSpec=async function(s){
     (s.theme==='ink'||!s.theme?'<div class="halftone"></div>':'')+
     (s.theme==='clear'?'':`<div class="top">${logo()}<span class="corner">${s.corner||''}</span></div>`)+
     (s.num?`<div class="num">${s.num}</div>`:'')+
-    `<div class="main" style="justify-content:${s.valign||'center'}">${s.blocks.map(block).join('')}</div>`+
+    (s.mascot?`${s.mascot.glow?`<div style="position:absolute;z-index:0;border-radius:50%;background:rgba(240,185,11,.35);filter:blur(120px);width:${s.mascot.h*.7}px;height:${s.mascot.h*.7}px;right:${(s.mascot.right??0)+s.mascot.h*.05}px;bottom:${(s.mascot.bottom??0)+s.mascot.h*.15}px"></div>`:''}<img src="${s.mascot.src}" style="position:absolute;z-index:1;height:${s.mascot.h}px;right:${s.mascot.right??0}px;bottom:${s.mascot.bottom??0}px">`:'')+
+    `<div class="main" style="justify-content:${s.valign||'center'};${s.mainRight?`right:${s.mainRight}px;`:''}${s.mainBottom?`bottom:${s.mainBottom}px;`:''}">${s.blocks.map(block).join('')}</div>`+
     (s.bottom===false?'':`<div class="bottom"><span class="l">${s.bottom?.l ?? '13–14 ноября 2026 · Москва'}</span>${s.bottom?.r ?? ''}</div>`);
   await Promise.all([...document.images].map(i=>i.decode().catch(()=>{})));
-  const W=window.innerWidth-180;
+  const W=c.querySelector('.main').clientWidth;
   $$('.fitbox').forEach(box=>{
     const fits=$$('.fit',box); fits.forEach(e=>e.style.fontSize='100px');
     const w=Math.max(...fits.map(e=>e.scrollWidth));
