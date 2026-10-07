@@ -58,8 +58,9 @@ def background(src, name, crop_h=None):
     s = ImageEnhance.Brightness(ImageEnhance.Contrast(ImageOps.grayscale(s)).enhance(1.15)).enhance(0.55).filter(ImageFilter.GaussianBlur(1.2))
     s.convert('RGB').save(f'assets/{name}_story.jpg', quality=90)
 
-cutout('src/speaker1.jpg', 'speaker1')
-cutout('src/speaker2.jpg', 'speaker2')
-for b in ['IMG_2335', 'IMG_2345', 'IMG_2378', 'IMG_2416']:
-    background(f'src/bg_{b}.jpg', f'bg_{b}')
-print('done')
+if __name__ == '__main__':
+  cutout('src/speaker1.jpg', 'speaker1')
+  cutout('src/speaker2.jpg', 'speaker2')
+  for b in ['IMG_2335', 'IMG_2345', 'IMG_2378', 'IMG_2416']:
+      background(f'src/bg_{b}.jpg', f'bg_{b}')
+  print('done')
