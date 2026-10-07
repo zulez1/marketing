@@ -6,10 +6,17 @@ from rembg import remove, new_session
 AMBER = (240, 185, 11)
 sess = new_session('isnet-general-use')
 
-def cutout(src, name):
+def largest(a):
+    """Keep only the biggest foreground blob (drops people in the background)."""
+    n, lab, st, _ = cv2.connectedComponentsWithStats((a > 128).astype(np.uint8), 8)
+    if n > 2: a = a * (lab == 1 + np.argmax(st[1:, 4]))
+    return a.astype(np.uint8)
+
+def cutout(src, name, only_largest=False):
     im = Image.open(src).convert('RGB')
     rgba = remove(im, session=sess, post_process_mask=True)
     a = np.array(rgba)[:, :, 3].copy()
+    if only_largest: a = largest(a)
     # fill small interior holes (e.g. dark patches on clothing the model dropped)
     inv = (a < 128).astype(np.uint8)
     n, lab, stats, _ = cv2.connectedComponentsWithStats(inv, 4)
