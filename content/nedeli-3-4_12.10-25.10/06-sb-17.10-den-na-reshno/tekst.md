@@ -25,11 +25,11 @@
 
 А 14 ноября — как вырасти: Owner vs Owner, Team, Finance, Future и ещё два Business Live.
 
-Программа может уточняться. Полная программа и участие → https://reshenoforum.ru/?utm_source=telegram&utm_medium=social&utm_campaign=resheno2026
+Программа может уточняться. Полная программа и участие → https://reshenoforum.ru/?utm_source=telegram&utm_medium=social&utm_campaign=resheno2026#program
 
 ## VK
 
-Тот же текст, ссылка для VK: `https://reshenoforum.ru/?utm_source=vk&utm_medium=social&utm_campaign=resheno2026` · хештеги: `#РЕШЕНО #спортивныйбизнес #спортивнаяшкола`
+Тот же текст, ссылка для VK: `https://reshenoforum.ru/?utm_source=vk&utm_medium=social&utm_campaign=resheno2026#program` · хештеги: `#РЕШЕНО #спортивныйбизнес #спортивнаяшкола`
 
 ## Instagram — подпись
 

@@ -18,11 +18,11 @@
 
 Стартовая цена — только для первых 50 участников.
 
-Забронировать место → https://reshenoforum.ru/?utm_source=telegram&utm_medium=social&utm_campaign=resheno2026
+Забронировать место → https://reshenoforum.ru/?utm_source=telegram&utm_medium=social&utm_campaign=resheno2026#tickets
 
 ## VK
 
-Тот же текст, ссылка для VK: `https://reshenoforum.ru/?utm_source=vk&utm_medium=social&utm_campaign=resheno2026` · хештеги: `#РЕШЕНО #спортивныйбизнес #спортивнаяшкола`
+Тот же текст, ссылка для VK: `https://reshenoforum.ru/?utm_source=vk&utm_medium=social&utm_campaign=resheno2026#tickets` · хештеги: `#РЕШЕНО #спортивныйбизнес #спортивнаяшкола`
 
 ## Instagram — подпись
 

@@ -18,11 +18,11 @@ Business Live — главный формат РЕШЕНО. Три бизнес�
 #02 «Где этот бизнес теряет деньги?» — 14 ноября, 15:30
 #03 «Как вырасти в 3 раза?» — 14 ноября, 17:10
 
-Три бизнеса выбираются заранее из заявок. Подать свой бизнес на разбор → https://reshenoforum.ru/?utm_source=telegram&utm_medium=social&utm_campaign=resheno2026
+Три бизнеса выбираются заранее из заявок. Подать свой бизнес на разбор → https://reshenoforum.ru/?utm_source=telegram&utm_medium=social&utm_campaign=resheno2026#business-live
 
 ## VK
 
-Тот же текст, ссылка для VK: `https://reshenoforum.ru/?utm_source=vk&utm_medium=social&utm_campaign=resheno2026` · хештеги: `#РЕШЕНО #спортивныйбизнес #спортивнаяшкола`
+Тот же текст, ссылка для VK: `https://reshenoforum.ru/?utm_source=vk&utm_medium=social&utm_campaign=resheno2026#business-live` · хештеги: `#РЕШЕНО #спортивныйбизнес #спортивнаяшкола`
 
 ## Instagram — подпись
 
@@ -35,6 +35,6 @@ Business Live — главный формат РЕШЕНО. Три бизнес�
 1) Обложка + стикер-ссылка «Подать бизнес на разбор».
 2) Отсчёт «21 день».
 
-## Перед публикацией
+## Ссылка
 
-Уточнить у организаторов, где именно форма заявки на разбор (якорь на сайте), и подставить ссылку.
+Ведёт сразу на блок Business Live (`#business-live`), там кнопка «Подать бизнес на разбор» открывает форму.
