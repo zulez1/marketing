@@ -29,6 +29,14 @@ body{width:1080px;height:1350px;overflow:hidden;font-family:Montserrat,sans-seri
 .bub{align-self:flex-start;background:var(--card);border:1.5px solid #2B2E35;border-radius:30px 30px 30px 8px;padding:28px 36px;font-size:40px;font-weight:600;max-width:600px;line-height:1.25}
 .bub small{display:block;font-size:22px;font-weight:700;color:var(--amber);margin-bottom:8px}
 .zubr{position:absolute;right:0;bottom:100px;height:680px}
+.grid{position:absolute;left:70px;right:70px;top:300px;bottom:120px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:16px}
+.cell{position:relative;border-radius:24px;background:var(--raised);overflow:hidden}
+.ink .cell{background:var(--card)}
+.cell img{position:absolute;left:50%;bottom:0;transform:translateX(-50%);max-height:88%;max-width:94%}
+.cell b{position:absolute;left:16px;top:12px;font-family:Unbounded;font-weight:800;font-size:52px;color:var(--amber);z-index:1}
+.ttl{position:absolute;left:70px;right:70px;top:160px;font-family:Unbounded;font-weight:800;font-size:58px;line-height:1.05;text-transform:uppercase}
+.ttl span{color:var(--amber)} .paper .ttl span{color:var(--deep)}
+.lbl{display:block;font-family:Unbounded;font-weight:800;font-size:22px;text-transform:uppercase;opacity:.55;margin-bottom:12px}
 .glow{position:absolute;right:40px;bottom:120px;width:560px;height:560px;border-radius:50%;background:rgba(240,185,11,.35);filter:blur(110px)}
 </style></head><body><div id="c"></div>
 <script>
@@ -36,6 +44,7 @@ const logo='<div class="logo"><div class="mark"></div><div><b>РЕШЕНО</b><s
 window.build=(s)=>{const c=document.getElementById('c');c.className=s.theme||'paper';
  let h=`<div class="top">${logo}<span class="tagr">${s.tag||''}</span></div>`;
  if(s.type==='rows') h+=`<div class="rows">${s.rows.map(r=>`<div class="row ${r.cls}"><div class="pic"><img src="${r.img}"></div><div class="txt" style="font-size:${r.size||44}px">${r.t}</div></div>`).join('')}</div>`;
+ if(s.type==='grid') h+=`<div class="ttl">${s.title}</div><div class="grid">${s.cells.map((c,i)=>`<div class="cell"><b>${i+1}</b><img src="${c}"></div>`).join('')}</div>`;
  if(s.type==='chat') h+=`<div class="glow"></div><img class="zubr" src="${s.img}"><div class="chat">${s.lines.map(l=>`<div class="line">${l}</div>`).join('')}<div class="bub"><small>${s.who}</small>${s.msg}</div></div>`;
  h+=`<div class="foot"><span>${s.foot||'13–14 ноября · Москва'}</span><span>reshenoforum.ru</span></div>`;
  c.innerHTML=h;return Promise.all([...document.images].map(i=>i.decode().catch(()=>{}))).then(()=>document.fonts.ready);};

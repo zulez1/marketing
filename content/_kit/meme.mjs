@@ -14,10 +14,12 @@ const specs = [
     lines: ['<span>Никто:</span>', '<span>Абсолютно никто:</span>', 'Родительский чат<br>в 23:47:'],
     who: 'Мама Артёма', msg: 'А завтра тренировка точно будет? 🙂' },
 ];
+const mod = process.argv[2] ? await import('./' + process.argv[2]) : null;
+const list = mod ? mod.specs : specs, outDir = mod ? mod.dir : '../memy';
 const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
-for (const s of specs) {
+for (const s of list) {
   const p = await b.newPage({ viewport: { width: 1080, height: 1350 } });
   await p.goto('http://127.0.0.1:8766/meme.html'); await p.evaluate(s => window.build(s), s);
-  await p.screenshot({ path: '../memy/' + s.out }); await p.close();
+  await p.screenshot({ path: outDir + '/' + s.out }); await p.close();
 }
-await b.close(); console.log('ok', specs.length);
+await b.close(); console.log('ok', list.length);
