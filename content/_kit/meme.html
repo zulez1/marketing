@@ -1,0 +1,42 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><link rel="stylesheet" href="fonts/fonts.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--ink:#0D0F13;--paper:#F3F0E8;--raised:#FAF8F3;--amber:#F0B90B;--deep:#8A6B06;--line:#DAD5C6;--card:#16181D}
+body{width:1080px;height:1350px;overflow:hidden;font-family:Montserrat,sans-serif;-webkit-font-smoothing:antialiased}
+#c{position:absolute;inset:0;padding:70px 70px 0}
+.paper{background:var(--paper);color:var(--ink)} .ink{background:var(--ink);color:var(--raised)}
+.top{display:flex;justify-content:space-between;align-items:center;height:60px}
+.logo{display:flex;align-items:center;gap:14px;font-family:Unbounded}
+.mark{width:18px;height:18px;background:var(--amber);border-radius:4px;transform:rotate(45deg)}
+.logo b{font-weight:800;font-size:26px;display:block}.logo small{font-weight:700;font-size:13px;color:var(--deep);display:block}
+.ink .logo small{color:var(--amber)}
+.tagr{font-family:Unbounded;font-weight:700;font-size:20px;text-transform:uppercase;opacity:.55}
+.rows{position:absolute;left:70px;right:70px;top:160px;bottom:130px;display:flex;flex-direction:column;gap:18px}
+.row{flex:1;display:flex;align-items:stretch;border-radius:28px;overflow:hidden;min-height:0}
+.pic{width:38%;position:relative;overflow:hidden}
+.pic img{position:absolute;left:50%;transform:translateX(-50%);height:118%;top:6%}
+.txt{flex:1;display:flex;align-items:center;padding:30px 44px;font-weight:700;line-height:1.22}
+.no .pic{background:#E6E1D3}.no .txt{background:var(--raised)}
+.yes .pic{background:var(--amber)}.yes .txt{background:var(--ink);color:var(--raised)}
+.b1 .pic{background:#E6E1D3}.b1 .txt{background:var(--raised)}
+.b2 .pic{background:#EADFB8}.b2 .txt{background:var(--raised)}
+.b3 .pic{background:#F2CF5A}.b3 .txt{background:var(--card);color:var(--raised)}
+.b4 .pic{background:var(--amber);box-shadow:inset 0 0 120px #fff7}.b4 .txt{background:var(--ink);color:var(--amber)}
+.foot{position:absolute;left:70px;right:70px;bottom:55px;display:flex;justify-content:space-between;font-weight:600;font-size:24px;opacity:.6}
+.chat{position:absolute;left:70px;right:70px;top:170px;display:flex;flex-direction:column;gap:26px}
+.line{font-weight:700;font-size:44px;line-height:1.2}
+.line span{opacity:.45}
+.bub{align-self:flex-start;background:var(--card);border:1.5px solid #2B2E35;border-radius:30px 30px 30px 8px;padding:28px 36px;font-size:40px;font-weight:600;max-width:600px;line-height:1.25}
+.bub small{display:block;font-size:22px;font-weight:700;color:var(--amber);margin-bottom:8px}
+.zubr{position:absolute;right:0;bottom:100px;height:680px}
+.glow{position:absolute;right:40px;bottom:120px;width:560px;height:560px;border-radius:50%;background:rgba(240,185,11,.35);filter:blur(110px)}
+</style></head><body><div id="c"></div>
+<script>
+const logo='<div class="logo"><div class="mark"></div><div><b>РЕШЕНО</b><small>BUSINESS LIVE</small></div></div>';
+window.build=(s)=>{const c=document.getElementById('c');c.className=s.theme||'paper';
+ let h=`<div class="top">${logo}<span class="tagr">${s.tag||''}</span></div>`;
+ if(s.type==='rows') h+=`<div class="rows">${s.rows.map(r=>`<div class="row ${r.cls}"><div class="pic"><img src="${r.img}"></div><div class="txt" style="font-size:${r.size||44}px">${r.t}</div></div>`).join('')}</div>`;
+ if(s.type==='chat') h+=`<div class="glow"></div><img class="zubr" src="${s.img}"><div class="chat">${s.lines.map(l=>`<div class="line">${l}</div>`).join('')}<div class="bub"><small>${s.who}</small>${s.msg}</div></div>`;
+ h+=`<div class="foot"><span>${s.foot||'13–14 ноября · Москва'}</span><span>reshenoforum.ru</span></div>`;
+ c.innerHTML=h;return Promise.all([...document.images].map(i=>i.decode().catch(()=>{}))).then(()=>document.fonts.ready);};
+</script></body></html>
