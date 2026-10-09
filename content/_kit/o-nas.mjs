@@ -33,8 +33,8 @@ export const specs = [
     blocks: [{ type: 'photo', h: 560, src: 'img/img3.jpg' }, { type: 'gap', s: 'm' },
       { type: 'display', max: 110, lines: ['Приезжаете', 'с вопросом.', { t: 'Уезжаете', c: 'acc' }, { t: 'с планом', c: 'acc' }] }] }),
   story({ out: '09.png', theme: 'amber', valign: 'flex-start', mainBottom: 880, bottom: { l: 'reshenoforum.ru' },
-    mascot: { src: 'img/zubr-priglashaet.png', h: 880, right: 60, bottom: 330 },
+    mascot: { src: 'img/zubr-priglashaet.png', h: 820, right: 455, bottom: 330 },
     blocks: [{ type: 'display', max: 120, lines: ['13–14 ноября', 'Москва'] }, { type: 'gap', s: 's' },
       { type: 'display', max: 110, lines: [{ t: 'Приехать решить', c: 'acc' }] }, { type: 'gap', s: 's' },
-      { type: 'p', html: 'Ссылка — <b>в шапке профиля</b>' }] }),
+      { type: 'p', html: 'Регистрация — <b>по ссылке</b>' }] }),
 ];
