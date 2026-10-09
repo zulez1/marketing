@@ -19,7 +19,7 @@ const znakomstvo = P('01-pn-12.10-znakomtes-zubr', [
       { type: 'list', items: [['Шутить', 'про жизнь владельца — без обид, только жиза'], ['Объяснять', 'цифры, формулы и шаблоны, которые можно забрать себе'], ['Звать', 'на РЕШЕНО 13–14 ноября']] }] },
   { theme: 'ink', mainRight: 430, mascot: { src: Z('dumaet'), h: 980, right: -150, bottom: -10, glow: true },
     blocks: [{ type: 'display', max: 120, lines: ['Но у него', { t: 'нет имени', c: 'acc' }] }, { type: 'gap', s: 'm' },
-      { type: 'p', html: 'Предлагайте в комментариях — <b>лучшие варианты выставим на голосование</b>' }] },
+      { type: 'p', html: 'Предлагайте в комментариях до 15 октября. <b>Автор имени-победителя получит билет на РЕШЕНО</b>' }] },
 ]);
 
 const klient = P('02-vt-13.10-poteryannyy-klient', [
@@ -161,4 +161,17 @@ const otschet = dates.map((d, i) => { const n = 32 - i, pose = poses[i % poses.l
     blocks: [{ type: 'tag', text: 'До форума' }, { type: 'gap', s: 's' }, { type: 'display', max: 360, lines: [String(n)] },
       { type: 'display', max: 130, lines: [days(n)] }, { type: 'gap', s: 's' }, { type: 'p', size: 32, html: D }] }; });
 
-export const specs = [...znakomstvo, ...klient, ...udrzh, ...den, ...ponedelnik, ...trener, ...live, ...prodazha, ...objasni, ...otschet];
+const konkurs = [
+  { size: 'S', out: 'konkurs-imeni/storis-1-12.10-predlagayte.png', theme: 'ink', corner: '', valign: 'flex-start', mainBottom: 1000, bottom: { l: 'Варианты — до 15 октября' },
+    mascot: { src: Z('dumaet'), h: 740, right: 150, bottom: 330, glow: true },
+    blocks: [{ type: 'tag', text: 'Конкурс' }, { type: 'gap', s: 's' }, { type: 'display', max: 120, lines: ['Придумайте', 'имя зубру —', { t: 'выиграйте', c: 'acc' }, { t: 'билет', c: 'acc' }] }] },
+  { size: 'S', out: 'konkurs-imeni/storis-2-16.10-golosovanie.png', theme: 'amber', corner: '', valign: 'flex-start', bottom: { l: 'Голосование до 17 октября, 23:59' },
+    blocks: [{ type: 'tag', text: 'Голосование' }, { type: 'gap', s: 's' }, { type: 'display', max: 120, lines: ['Выбираем', 'имя', { t: 'зубру', c: 'acc' }] }, { type: 'gap', s: 'm' },
+      { type: 'slot', h: 520, text: 'Сюда — стикер-опрос с вариантами имени' }] },
+  { size: 'S', out: 'konkurs-imeni/storis-3-18.10-pobeditel.png', theme: 'ink', corner: '', valign: 'flex-start', mainBottom: 920, bottom: { l: 'До встречи на РЕШЕНО!' },
+    mascot: { src: Z('aplodiruet'), h: 820, right: 140, bottom: 330, glow: true },
+    blocks: [{ type: 'tag', text: 'Имя выбрано' }, { type: 'gap', s: 's' }, { type: 'display', max: 120, lines: ['Знакомьтесь:', { t: '[ИМЯ]', c: 'acc' }] }, { type: 'gap', s: 's' },
+      { type: 'p', html: 'Автор — <b>@[ник]</b>. Билет на РЕШЕНО — ваш!' }] },
+];
+
+export const specs = [...konkurs, ...znakomstvo, ...klient, ...udrzh, ...den, ...ponedelnik, ...trener, ...live, ...prodazha, ...objasni, ...otschet];

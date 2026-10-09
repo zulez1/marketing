@@ -90,6 +90,7 @@ function block(b){
     case 'photo': return `<div class="photo" style="height:${b.h||420}px"><img src="${b.src}"></div>`;
     case 'vs': return `<div class="vs">${b.items.map(t=>`<div class="card"><div class="big">${t}</div></div>`).join('<!---->')}</div>`;
     case 'bars': return `<div class="list">${b.items.map(([l,p])=>`<div class="bar"><div><div class="lbl">${l}</div><div class="track"><div class="fill" style="width:${typeof p==='number'?p:0}%"></div></div></div><div class="pct">${typeof p==='number'?p+'%':p}</div></div>`).join('')}</div>`;
+    case 'slot': return `<div style="height:${b.h||400}px;border:3px dashed currentColor;border-radius:26px;display:flex;align-items:center;justify-content:center;text-align:center;padding:30px;font-weight:700;font-size:28px;opacity:.45">${b.text}</div>`;
     case 'gap': return `<div class="gap-${b.s||'m'}"></div>`;
     case 'grow': return `<div class="grow"></div>`;
   }
