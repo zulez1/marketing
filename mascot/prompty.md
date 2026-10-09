@@ -6,7 +6,7 @@
   - ChatGPT / GPT-image: загрузить картинку + «Сделай этого же персонажа…» + промпт.
   - Midjourney: `--cref <ссылка на картинку> --cw 100` (или `--oref` в новых версиях) — держит внешность и одежду.
   - Другие (Kandinsky, Шедеврум, Leonardo, Flux): режим «по референсу» / «character reference».
-- **Надпись на бейдже** генераторы пишут криво. Просите «blank yellow badge» — логотип РЕШЕНО я наложу сам при вырезке.
+- **Бейдж с символикой форума обязателен** — он уже прописан в основе: жёлтый бейдж, на нём чёрный ромб и надпись РЕШЕНО, жёлтый шнурок с чёрными ромбиками, жёлтый значок-ромб на лацкане. Если генератор напишет «РЕШЕНО» с ошибкой или нарисует не тот знак — не страшно: присылайте, я заменю бейдж на правильный логотип при вырезке.
 - **Белый фон** — я потом вырежу его в прозрачный PNG.
 - Генерируйте по 3–4 варианта и берите тот, где морда и рога ближе всего к оригиналу.
 - Английские промпты обычно дают более точный результат; в ChatGPT можно и по-русски (ниже есть русский вариант основы).
@@ -14,10 +14,10 @@
 ## Основа (вставлять в начало каждого промпта)
 
 **EN:**
-> The same character as in the reference image: an anthropomorphic European bison (zubr) mascot, Pixar-style 3D render, fluffy curly dark-brown fur, short curved cream-coloured horns, brown eyes, friendly confident smile. He wears an oversized black blazer, a white crew-neck t-shirt, wide black trousers, grey chunky sneakers, and a yellow lanyard with a blank yellow badge. POSE: [ПОЗА]. Full body, centered, plain pure white background, soft studio lighting, high detail, no text, no watermark.
+> The same character as in the reference image: an anthropomorphic European bison (zubr) mascot, Pixar-style 3D render, fluffy curly dark-brown fur, short curved cream-coloured horns, brown eyes, friendly confident smile. He wears an oversized black blazer, a white crew-neck t-shirt, wide black trousers, grey chunky sneakers, a small yellow diamond-shaped pin on the left lapel, and a yellow lanyard with small black diamond icons holding a yellow rectangular badge; on the badge: a black diamond (a square rotated 45°) with the bold black word «РЕШЕНО» below it, exactly as in the reference. POSE: [ПОЗА]. Full body, centered, plain pure white background, soft studio lighting, high detail, no text, no watermark.
 
 **RU (для ChatGPT):**
-> Тот же персонаж, что на картинке: антропоморфный зубр-маскот, 3D в стиле Pixar, пушистая кудрявая тёмно-коричневая шерсть, короткие изогнутые светлые рога, карие глаза, дружелюбная уверенная улыбка. Одет в свободный чёрный пиджак, белую футболку, широкие чёрные брюки, серые массивные кроссовки, на шее жёлтый шнурок с пустым жёлтым бейджем. ПОЗА: [поза]. В полный рост, по центру, чистый белый фон, мягкий студийный свет, высокая детализация, без текста.
+> Тот же персонаж, что на картинке: антропоморфный зубр-маскот, 3D в стиле Pixar, пушистая кудрявая тёмно-коричневая шерсть, короткие изогнутые светлые рога, карие глаза, дружелюбная уверенная улыбка. Одет в свободный чёрный пиджак, белую футболку, широкие чёрные брюки, серые массивные кроссовки, на лацкане маленький жёлтый значок-ромб, на шее жёлтый шнурок с чёрными ромбиками и жёлтым прямоугольным бейджем: на бейдже чёрный ромб (квадрат, повёрнутый на 45°) и под ним жирная чёрная надпись «РЕШЕНО» — как на референсе. ПОЗА: [поза]. В полный рост, по центру, чистый белый фон, мягкий студийный свет, высокая детализация, без текста.
 
 ## Позы — подставить вместо [ПОЗА]
 
@@ -67,4 +67,4 @@
 | 29 | Портрет по пояс | waist-up portrait, looking straight at the camera, warm smile (заменить «Full body» на «waist-up») |
 | 30 | Со спины | seen from behind, looking at a big stage with yellow lights |
 
-После генерации пришлите картинки — вырежу фон, поставлю логотип на бейдж и добавлю в `png/`.
+После генерации пришлите картинки — вырежу фон, при необходимости поправлю бейдж и добавлю в `png/`.
