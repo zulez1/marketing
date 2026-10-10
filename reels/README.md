@@ -48,3 +48,7 @@ cd reels/src && python3 build.py specs/reel1-polnyy-zal.json
 ```
 
 `cut.py` — нарезка и цвет, `overlay.html` — титры и концовка, `music.py` — трек (стиль задаётся полем `style`: house / trap / epic / tension) и удары под склейки, `build.py` — сборка.
+
+## Рилс «Знакомьтесь, это зубр» (`reel5-zubr-znakomtes.mp4`)
+
+14 с, 120 BPM, склейки: 0 · 2 · 4 · 5 · 6 · 7 · 8 · 9 · 11 с. Под трендовый звук — `bez-muzyki/reel5-zubr-znakomtes-bez-zvuka.mp4` (совсем без звука) или `…-bez-muzyki.mp4` (только «вжухи» на склейках). Звук подбирать так, чтобы «удар» трека пришёлся на 2-ю секунду — момент «Это зубр РЕШЕНО».
