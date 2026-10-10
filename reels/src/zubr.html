@@ -1,0 +1,49 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><link rel="stylesheet" href="/content/_kit/fonts/fonts.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:1080px;height:1920px;overflow:hidden;font-family:Montserrat,sans-serif}
+#s{position:absolute;inset:0;overflow:hidden}
+.ink{background:#0D0F13;color:#FAF8F3}.amber{background:#F0B90B;color:#0D0F13}.paper{background:#F3F0E8;color:#0D0F13}
+.logo{position:absolute;left:80px;top:150px;display:flex;align-items:center;gap:16px;font-family:Unbounded}
+.mark{width:22px;height:22px;background:#F0B90B;border-radius:5px;transform:rotate(45deg)}.amber .mark{background:#0D0F13}
+.logo b{font-weight:800;font-size:34px;display:block}.logo small{font-weight:700;font-size:16px;color:#F0B90B;display:block}.amber .logo small,.paper .logo small{color:#8A6B06}.amber .logo small{color:#0D0F13}
+.kick{position:absolute;left:80px;top:300px;font-family:Unbounded;font-weight:700;font-size:34px;text-transform:uppercase;padding:14px 30px;border-radius:999px;background:#F0B90B;color:#0D0F13}
+.amber .kick{background:#0D0F13;color:#F0B90B}.paper .kick{background:rgba(240,185,11,.25);color:#8A6B06}
+.t{position:absolute;z-index:2;left:80px;right:80px;top:390px;font-family:Unbounded;font-weight:800;text-transform:uppercase;line-height:1.02}
+.t i{font-style:normal;color:#F0B90B}.amber .t i{background:#0D0F13;color:#F0B90B;padding:0 .1em}.paper .t i{color:#8A6B06}
+.z{position:absolute;left:50%;bottom:260px;transform-origin:50% 100%}
+.glow{position:absolute;left:50%;bottom:380px;width:820px;height:820px;margin-left:-410px;border-radius:50%;background:rgba(240,185,11,.38);filter:blur(130px)}
+.foot{position:absolute;left:80px;right:80px;bottom:150px;font-weight:700;font-size:34px;text-align:center;opacity:.85}
+.flash{position:absolute;inset:0;background:#fff;pointer-events:none}
+</style></head><body><div id="s"></div>
+<script>
+const Z=n=>`/content/_kit/img/zubr-${n}.png`;
+const S=[
+ {a:0,b:2,bg:'ink',p:'dumaet',k:'',t:'Кто<br><i>это?</i>',fs:200,h:760,peek:1},
+ {a:2,b:4,bg:'amber',p:'priglashaet',k:'Знакомьтесь',t:'Это зубр<br><i>РЕШЕНО</i>',fs:130,h:760},
+ {a:4,b:5,bg:'ink',p:'zlitsya',k:'Он тоже владелец',t:'Злится<br>на родительский<br><i>чат</i>',fs:84,h:760},
+ {a:5,b:6,bg:'paper',p:'v-shoke',k:'Он тоже владелец',t:'В шоке<br>от <i>аренды</i>',fs:120,h:760},
+ {a:6,b:7,bg:'ink',p:'spit',k:'Он тоже владелец',t:'Спит<br>над <i>отчётом</i>',fs:120,h:560},
+ {a:7,b:8,bg:'amber',p:'facepalm',k:'Он тоже владелец',t:'Тренер<br><i>опять</i><br>заболел',fs:120,h:760},
+ {a:8,b:9,bg:'paper',p:'ustal',k:'Он тоже владелец',t:'Устал<br>к концу <i>сезона</i>',fs:110,h:760},
+ {a:9,b:11,bg:'ink',p:'klass',k:'Но',t:'Знает, где<br>найти <i>решения</i>',fs:110,h:760},
+ {a:11,b:15,bg:'amber',p:'aplodiruet',k:'13–14 ноября · Москва',t:'Он покажет,<br>как устроен<br><i>форум</i>',fs:100,h:640,end:1},
+];
+const s=document.getElementById('s');
+window.ready=(async()=>{await document.fonts.ready;await Promise.all(['800 40px Unbounded','700 40px Unbounded','700 40px Montserrat'].map(f=>document.fonts.load(f,'РЕШЕНО')));
+ await Promise.all(S.map(x=>new Promise(r=>{const i=new Image();i.onload=r;i.src=Z(x.p);})));return 1;})();
+const ease=x=>1-Math.pow(1-Math.min(Math.max(x,0),1),3);
+const back=x=>{x=Math.min(Math.max(x,0),1);const c=1.70158;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2);};
+window.render=t=>{const sc=S.find(x=>t>=x.a&&t<x.b)||S[S.length-1];const lt=t-sc.a;
+ const pop=back(lt/0.3),txt=ease((lt-0.05)/0.3),drift=1+0.03*lt;
+ let zx=0;if(sc.peek)zx=(1-ease(lt/0.8))*600;
+ s.className=sc.bg;
+ s.innerHTML=`${sc.bg==='ink'?'<div class="glow"></div>':''}
+ <div class="logo"><div class="mark"></div><div><b>РЕШЕНО</b><small>BUSINESS LIVE</small></div></div>
+ ${sc.k?`<div class="kick" style="opacity:${txt};transform:translateY(${(1-txt)*30}px)">${sc.k}</div>`:''}
+ <div class="t" style="font-size:${sc.fs}px;top:${sc.k?400:330}px;opacity:${txt};transform:translateY(${(1-txt)*60}px)">${sc.t}</div>
+ <img class="z" src="${Z(sc.p)}" style="height:${sc.h}px;transform:translateX(calc(-50% + ${zx}px)) scale(${(0.8+0.2*pop)*drift})">
+ ${sc.end?`<div class="foot" style="opacity:${ease((lt-0.6)/0.4)}">reshenoforum.ru</div>`:''}
+ ${lt<0.12&&sc.a>0?`<div class="flash" style="opacity:${0.55*(1-lt/0.12)}"></div>`:''}`;
+};
+</script></body></html>

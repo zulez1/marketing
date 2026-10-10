@@ -8,18 +8,26 @@ const sub = (b, s) => `${b}<br><span style="font-weight:600;font-size:26px;opaci
 const P = (folder, slides) => slides.map((s, i) => ({ size: 'P', corner: `${String(i + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`,
   bottom: { l: D, ...(i === 0 ? swipe : i < slides.length - 1 ? next : {}) }, ...s, out: `${folder}/slide-${i + 1}.png` }));
 
-const znakomstvo = P('01-pn-12.10-znakomtes-zubr', [
-  { theme: 'ink', mainRight: 450, mascot: { src: Z('priglashaet'), h: 1040, right: -130, bottom: -10, glow: true },
+const fmt = (k, v) => ({ type: 'card', size: 34, kicker: k, html: v });
+const znakomstvo = P('01-pn-12.10-zubr-formaty', [
+  { theme: 'ink', mainRight: 490, mascot: { src: Z('priglashaet'), h: 1000, right: -190, bottom: -10, glow: true },
     blocks: [{ type: 'tag', text: 'Знакомьтесь' }, { type: 'gap', s: 'm' },
-      { type: 'display', max: 120, lines: ['Это', 'зубр', { t: 'РЕШЕНО', c: 'acc' }] }] },
-  { theme: 'paper', mainRight: 440, mascot: { src: Z('ustal'), h: 760, right: -60, bottom: 40 },
-    blocks: [{ type: 'display', max: 110, lines: ['Он тоже', 'владелец', { t: 'спортивного', c: 'acc' }, { t: 'бизнеса', c: 'acc' }] }, { type: 'gap', s: 'm' },
-      { type: 'p', size: 30, html: 'Отвечает в родительском чате в 23:47, ищет тренеров и считает, куда ушли деньги' }] },
-  { theme: 'amber', blocks: [{ type: 'display', max: 120, lines: ['Здесь он', 'будет:'] }, { type: 'gap', s: 'm' },
-      { type: 'list', items: [['Шутить', 'про жизнь владельца — без обид, только жиза'], ['Объяснять', 'цифры, формулы и шаблоны, которые можно забрать себе'], ['Звать', 'на РЕШЕНО 13–14 ноября']] }] },
-  { theme: 'ink', mainRight: 430, mascot: { src: Z('dumaet'), h: 980, right: -150, bottom: -10, glow: true },
-    blocks: [{ type: 'display', max: 120, lines: ['Но у него', { t: 'нет имени', c: 'acc' }] }, { type: 'gap', s: 'm' },
-      { type: 'p', html: 'Предлагайте в комментариях до 15 октября. <b>Автор имени-победителя получит билет на РЕШЕНО</b>' }] },
+      { type: 'display', max: 110, lines: ['Это зубр.', { t: 'Он покажет,', c: 'acc' }, { t: 'как устроен', c: 'acc' }, { t: 'форум', c: 'acc' }] }] },
+  { theme: 'paper', blocks: [{ type: 'tag', text: 'Сцена' }, { type: 'gap', s: 'm' },
+      fmt('Owner Talk', 'Собственник говорит о том, что действительно работает'), { type: 'gap', s: 's' },
+      fmt('Honest Numbers', 'Цифры, ошибки, экономика и результаты — без прикрас'), { type: 'gap', s: 's' },
+      fmt('Debate', 'Две позиции. Один вопрос. Аргументы')] },
+  { theme: 'ink', blocks: [{ type: 'tag', text: 'Разборы' }, { type: 'gap', s: 'm' },
+      fmt('Business Live', 'Реальный бизнес разбирают перед залом — по цифрам'), { type: 'gap', s: 's' },
+      fmt('Hot Seat', 'Можно задать вопрос, который обычно не задают публично'), { type: 'gap', s: 's' },
+      fmt('Owner Tables', 'Небольшие группы собственников по одному конкретному вопросу')] },
+  { theme: 'amber', blocks: [{ type: 'tag', text: 'Знакомства' }, { type: 'gap', s: 'm' },
+      fmt('1:1 Business Meetings', 'Переговоры один на один с нужными людьми'), { type: 'gap', s: 's' },
+      fmt('Business Lunch', 'Обед как часть деловой программы'), { type: 'gap', s: 's' },
+      fmt('Sport Business Night', 'Вечер историй, музыки и новых знакомств')] },
+  { theme: 'ink', mainRight: 430, mascot: { src: Z('klass'), h: 960, right: -110, bottom: -10, glow: true },
+    blocks: [{ type: 'display', max: 110, lines: ['9 форматов', { t: 'вместо одной', c: 'acc' }, { t: 'сцены', c: 'acc' }] }, { type: 'gap', s: 'm' },
+      { type: 'p', html: 'Дальше зубр будет делиться <b>полезным для владельцев</b>. Подпишитесь, чтобы не пропустить' }] },
 ]);
 
 const klient = P('02-vt-13.10-poteryannyy-klient', [
@@ -53,7 +61,7 @@ const frazy = [
 const udrzh = P('04-cht-15.10-5-fraz-posle-probnogo', [
   { theme: 'paper', mainRight: 430, mascot: { src: Z('podmigivaet'), h: 960, right: -120, bottom: -10 },
     blocks: [{ type: 'tag', text: 'Полезняшка' }, { type: 'gap', s: 'm' },
-      { type: 'display', max: 110, lines: ['5 фраз,', 'которые', { t: 'удерживают', c: 'acc' }, { t: 'после', c: 'acc' }, { t: 'пробного', c: 'acc' }] }] },
+      { type: 'display', max: 110, lines: ['5 фраз,', 'которые', { t: 'удерживают', c: 'acc' }, { t: 'клиента', c: 'acc' }, 'после', 'пробного', 'занятия'] }] },
   ...frazy.map(([f, w], i) => ({ theme: i % 2 ? 'paper' : 'ink', num: `0${i + 1}`, blocks: [{ type: 'tag', text: `Фраза ${i + 1}` }, { type: 'gap', s: 'm' },
       { type: 'card', size: 44, html: f }, { type: 'gap', s: 'm' }, { type: 'p', html: `<b>Почему работает:</b> ${w}` }] })),
   { theme: 'amber', mainRight: 440, mascot: { src: Z('klass'), h: 960, right: -120, bottom: -10 },
@@ -127,9 +135,9 @@ const live = P('12-pt-23.10-business-live', [
       { type: 'list', items: [['01', 'Вы присылаете заявку и цифры'], ['02', 'Эксперты и зал задают вопросы'], ['03', 'Ищем решения вживую, по цифрам'], ['04', 'Вы уезжаете с планом действий']] }] },
   { theme: 'paper', blocks: [{ type: 'display', max: 110, lines: ['Три бизнеса.', 'Три проблемы.', { t: 'Три решения.', c: 'acc' }] }, { type: 'gap', s: 'm' },
       { type: 'list', times: true, items: [['#01', sub('Почему этот бизнес не растёт?', '13 ноября · 17:00')], ['#02', sub('Где этот бизнес теряет деньги?', '14 ноября · 15:30')], ['#03', sub('Как вырасти в 3 раза?', '14 ноября · 17:10')]] }] },
-  { theme: 'ink', mainRight: 430, mascot: { src: Z('podmigivaet'), h: 960, right: -120, bottom: -10, glow: true },
+  { theme: 'ink', mainRight: 370, mascot: { src: Z('podmigivaet'), h: 900, right: -190, bottom: -10, glow: true },
     blocks: [{ type: 'display', max: 110, lines: ['Хотите', 'разбор', { t: 'своего', c: 'acc' }, { t: 'бизнеса?', c: 'acc' }] }, { type: 'gap', s: 'm' },
-      { type: 'p', html: 'Три бизнеса выбираются заранее из заявок. <b>Заявка — на сайте</b>' }, { type: 'gap', s: 'l' }, { type: 'btn', text: 'Подать заявку' }] },
+      { type: 'p', html: 'Три бизнеса выбираются заранее. <b>Подавайте заявку на сайте</b>' }, { type: 'gap', s: 'l' }, { type: 'btn', text: 'Подробности в описании' }] },
 ]);
 
 const prodazha = P('13-sb-24.10-ne-bilet', [
@@ -137,7 +145,7 @@ const prodazha = P('13-sb-24.10-ne-bilet', [
     blocks: [{ type: 'display', max: 120, lines: ['Вы покупаете', { t: 'не билет', c: 'acc' }] }, { type: 'gap', s: 'm' },
       { type: 'p', html: 'А доступ к людям, решениям и новым возможностям' }] },
   { theme: 'paper', blocks: [{ type: 'tag', text: 'Что внутри' }, { type: 'gap', s: 'm' },
-      { type: 'list', items: [['2 дня', 'программа, разборы, Hot Seat и дебаты'], ['Match', 'список полезных контактов ещё до форума'], ['Tables', 'собственники в узком кругу по вашему вопросу'], ['Night', 'вечер знакомств без регламента']] }] },
+      { type: 'list', items: [['2 дня', 'программа, разборы, дебаты и честные вопросы из зала'], ['Контакты', 'подборка полезных знакомств ещё до форума'], ['Круглые столы', 'собственники в узком кругу по вашему вопросу'], ['Вечер', 'неформальные знакомства без регламента']] }] },
   { theme: 'amber', mainRight: 440, mascot: { src: Z('aplodiruet'), h: 960, right: -130, bottom: -10 },
     blocks: [{ type: 'display', max: 110, lines: ['Приезжайте', { t: 'командой', c: 'acc' }] }, { type: 'gap', s: 'm' },
       { type: 'p', html: 'Пакеты на 3 и 5 человек: <b>чем больше людей — тем больше скидка</b>' }] },
@@ -146,10 +154,27 @@ const prodazha = P('13-sb-24.10-ne-bilet', [
       { type: 'btn', text: 'Забронировать' }, { type: 'url', text: 'reshenoforum.ru' }] },
 ]);
 
-const objasni = [{ size: 'P', out: '14-vs-25.10-objasni/slide-1.png', theme: 'paper', corner: 'Вопрос недели', mainRight: 430,
-  mascot: { src: Z('smeetsya-2'), h: 1000, right: -150, bottom: -10 }, bottom: { l: D },
-  blocks: [{ type: 'display', max: 100, lines: ['Объясните,', 'что вы', { t: 'владелец', c: 'acc' }, { t: 'спортшколы,', c: 'acc' }, 'не говоря', 'об этом'] }, { type: 'gap', s: 'm' },
-    { type: 'p', size: 30, html: 'Лучшие ответы <b>соберём в карусель</b>' }] }];
+const rozygrysh = P('03-sr-14.10-rozygrysh-bileta', [
+  { theme: 'amber', mainRight: 440, mascot: { src: Z('podmigivaet'), h: 1000, right: -130, bottom: -10 },
+    blocks: [{ type: 'tag', text: 'Розыгрыш' }, { type: 'gap', s: 'm' },
+      { type: 'display', max: 110, lines: ['Разыгрываем', { t: 'билет', c: 'acc' }, 'на РЕШЕНО'] }, { type: 'gap', s: 'm' },
+      { type: 'p', html: '13–14 ноября, Москва. <b>Итоги — 25 октября</b>' }] },
+  { theme: 'ink', blocks: [{ type: 'tag', text: 'Условия' }, { type: 'gap', s: 'm' },
+      { type: 'list', items: [['01', 'Подпишитесь на наш Telegram-канал и Instagram'], ['02', 'Поставьте лайк на 3 последних поста'], ['03', 'Отметьте в комментариях коллегу — владельца спортивного бизнеса']] }, { type: 'gap', s: 'm' },
+      { type: 'p', size: 30, html: 'Каждая отметка нового коллеги — <b>ещё один шанс</b>. Победителя выберем случайно 25 октября' }] },
+]);
+const itogi = [
+  { size: 'P', out: '14-vs-25.10-itogi-rozygrysha/slide-1.png', theme: 'ink', corner: 'Итоги розыгрыша', mainRight: 430,
+    mascot: { src: Z('aplodiruet'), h: 980, right: -130, bottom: -10, glow: true }, bottom: { l: D },
+    blocks: [{ type: 'tag', text: 'Победитель' }, { type: 'gap', s: 'm' }, { type: 'display', max: 110, lines: ['Билет', 'на РЕШЕНО', { t: 'получает', c: 'acc' }] }, { type: 'gap', s: 's' }, { type: 'card', size: 56, html: '@[ник]' }, { type: 'gap', s: 'm' },
+      { type: 'p', html: 'Спасибо всем, кто участвовал! <b>Стартовая цена — для первых 50</b>, успевайте' }] },
+  { size: 'S', out: '14-vs-25.10-itogi-rozygrysha/storis-pobeditel.png', theme: 'amber', corner: '', valign: 'flex-start', mainBottom: 920, bottom: { l: 'До встречи на РЕШЕНО!' },
+    mascot: { src: Z('aplodiruet'), h: 820, right: 140, bottom: 330 },
+    blocks: [{ type: 'tag', text: 'Итоги розыгрыша' }, { type: 'gap', s: 's' }, { type: 'display', max: 120, lines: ['Билет', { t: 'получает', c: 'acc' }] }, { type: 'gap', s: 's' }, { type: 'card', size: 64, html: '@[ник]' }] },
+  { size: 'S', out: '03-sr-14.10-rozygrysh-bileta/storis.png', theme: 'ink', corner: '', valign: 'flex-start', mainBottom: 1000, bottom: { l: 'Условия — в посте' },
+    mascot: { src: Z('podmigivaet'), h: 820, right: 140, bottom: 330, glow: true },
+    blocks: [{ type: 'tag', text: 'Розыгрыш' }, { type: 'gap', s: 's' }, { type: 'display', max: 120, lines: ['Разыгрываем', { t: 'билет', c: 'acc' }, 'на РЕШЕНО'] }] },
+];
 
 // countdown stories: 12.10 → 32 days … 25.10 → 19 days
 const days = n => (n % 10 === 1 && n % 100 !== 11) ? 'день' : ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100)) ? 'дня' : 'дней';
@@ -161,17 +186,4 @@ const otschet = dates.map((d, i) => { const n = 32 - i, pose = poses[i % poses.l
     blocks: [{ type: 'tag', text: 'До форума' }, { type: 'gap', s: 's' }, { type: 'display', max: 360, lines: [String(n)] },
       { type: 'display', max: 130, lines: [days(n)] }, { type: 'gap', s: 's' }, { type: 'p', size: 32, html: D }] }; });
 
-const konkurs = [
-  { size: 'S', out: 'konkurs-imeni/storis-1-12.10-predlagayte.png', theme: 'ink', corner: '', valign: 'flex-start', mainBottom: 1000, bottom: { l: 'Варианты — до 15 октября' },
-    mascot: { src: Z('dumaet'), h: 740, right: 150, bottom: 330, glow: true },
-    blocks: [{ type: 'tag', text: 'Конкурс' }, { type: 'gap', s: 's' }, { type: 'display', max: 120, lines: ['Придумайте', 'имя зубру —', { t: 'выиграйте', c: 'acc' }, { t: 'билет', c: 'acc' }] }] },
-  { size: 'S', out: 'konkurs-imeni/storis-2-16.10-golosovanie.png', theme: 'amber', corner: '', valign: 'flex-start', bottom: { l: 'Голосование до 17 октября, 23:59' },
-    blocks: [{ type: 'tag', text: 'Голосование' }, { type: 'gap', s: 's' }, { type: 'display', max: 120, lines: ['Выбираем', 'имя', { t: 'зубру', c: 'acc' }] }, { type: 'gap', s: 'm' },
-      { type: 'slot', h: 520, text: 'Сюда — стикер-опрос с вариантами имени' }] },
-  { size: 'S', out: 'konkurs-imeni/storis-3-18.10-pobeditel.png', theme: 'ink', corner: '', valign: 'flex-start', mainBottom: 920, bottom: { l: 'До встречи на РЕШЕНО!' },
-    mascot: { src: Z('aplodiruet'), h: 820, right: 140, bottom: 330, glow: true },
-    blocks: [{ type: 'tag', text: 'Имя выбрано' }, { type: 'gap', s: 's' }, { type: 'display', max: 120, lines: ['Знакомьтесь:', { t: '[ИМЯ]', c: 'acc' }] }, { type: 'gap', s: 's' },
-      { type: 'p', html: 'Автор — <b>@[ник]</b>. Билет на РЕШЕНО — ваш!' }] },
-];
-
-export const specs = [...konkurs, ...znakomstvo, ...klient, ...udrzh, ...den, ...ponedelnik, ...trener, ...live, ...prodazha, ...objasni, ...otschet];
+export const specs = [...znakomstvo, ...klient, ...udrzh, ...den, ...ponedelnik, ...trener, ...live, ...prodazha, ...rozygrysh, ...itogi, ...otschet];

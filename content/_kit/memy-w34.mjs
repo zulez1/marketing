@@ -6,7 +6,7 @@ export const specs = [
   { out: '03-sr-14.10-mem-roditelskiy-chat/mem.png', type: 'chat', theme: 'ink', tag: 'Жиза владельца', img: Z('zlitsya'),
     lines: ['<span>Никто:</span>', '<span>Абсолютно никто:</span>', 'Родительский чат<br>в 23:47:'], who: 'Мама Артёма', msg: 'А завтра тренировка точно будет? 🙂' },
   { out: '05-pt-16.10-mem-net-da/mem.png', type: 'rows', tag: 'Мем', rows: [
-    { cls: 'no', img: Z('zakatyvaet-glaza'), t: 'Ещё один форум, где два дня вдохновляют и рассказывают про мечту' },
+    { cls: 'no', img: Z('zakatyvaet-glaza-chb'), t: 'Ещё один форум, где два дня вдохновляют и рассказывают про мечту' },
     { cls: 'yes', img: Z('klass'), t: 'Два дня разбирать свои цифры с теми, кто уже прошёл этот путь' }] },
   { out: '07-vs-18.10-kakoy-ty-zubr/mem.png', type: 'grid', theme: 'ink', tag: 'Вопрос дня',
     title: 'Какой ты зубр <span>сегодня?</span>', cells: [Z('spit'), Z('zlitsya'), Z('ustal'), Z('v-shoke'), Z('smeetsya'), Z('klass')] },
