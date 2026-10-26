@@ -18,3 +18,4 @@ youtube/src/node_modules
 youtube/*.wav
 reels/src/node_modules
 __pycache__/
+speakers/src/node_modules

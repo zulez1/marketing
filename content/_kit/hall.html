@@ -1,0 +1,54 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><link rel="stylesheet" href="fonts/fonts.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:1080px;height:1350px;overflow:hidden;background:#0D0F13;color:#FAF8F3;font-family:Montserrat,sans-serif;-webkit-font-smoothing:antialiased}
+.top{position:absolute;left:90px;right:90px;top:80px;display:flex;justify-content:space-between;align-items:center}
+.logo{display:flex;align-items:center;gap:16px;font-family:Unbounded}.mark{width:20px;height:20px;background:#F0B90B;border-radius:5px;transform:rotate(45deg)}
+.logo b{font-weight:800;font-size:30px;display:block}.logo small{font-weight:700;font-size:15px;color:#F0B90B;display:block;margin-top:4px}
+.corner{font-family:Unbounded;font-weight:700;font-size:24px;opacity:.55}
+h1{position:absolute;left:90px;right:90px;top:190px;font-family:Unbounded;font-weight:800;font-size:84px;line-height:1.02;text-transform:uppercase}
+h1 i{font-style:normal;color:#F0B90B}
+.sub{position:absolute;left:90px;right:90px;top:400px;font-weight:600;font-size:32px;line-height:1.35;color:#C9CBD1}.sub b{color:#FAF8F3}
+svg{position:absolute;left:0;top:470px}
+.bottom{position:absolute;left:90px;right:90px;bottom:80px;display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:26px}
+.bottom span{opacity:.6}
+.halftone{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.14) 1.5px,transparent 2px);background-size:11px 11px;opacity:.45;-webkit-mask-image:radial-gradient(ellipse 80% 55% at 85% 15%,black 10%,transparent 70%)}
+</style></head><body>
+<div class="halftone"></div>
+<div class="top"><div class="logo"><div class="mark"></div><div><b>РЕШЕНО</b><small>BUSINESS LIVE</small></div></div><span class="corner">13–14.11 · Москва</span></div>
+<h1>Места<br><i>разбирают</i></h1>
+<div class="sub">200–300 участников. <b>Одно место — ваше?</b></div>
+<svg id="v" width="1080" height="760" viewBox="0 0 1080 760"></svg>
+<div class="bottom"><span>Форум владельцев спортивного бизнеса</span><span>reshenoforum.ru</span></div>
+<script>
+const v=document.getElementById('v'),NS='http://www.w3.org/2000/svg';
+const C=Math.cos(Math.PI/6),S=Math.sin(Math.PI/6),U=50,OX=420,OY=150;
+const P=(x,y,z=0)=>[OX+(x-y)*C*U,OY+(x+y)*S*U-z*U];
+const el=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);v.appendChild(e);return e;};
+const poly=(pts,fill,op=1)=>el('polygon',{points:pts.map(p=>p.join(',')).join(' '),fill,'fill-opacity':op});
+function box(x,y,z,w,d,h,top,left,right){ // x..x+w, y..y+d, z..z+h
+ poly([P(x,y+d,z),P(x+w,y+d,z),P(x+w,y+d,z+h),P(x,y+d,z+h)],left);
+ poly([P(x+w,y,z),P(x+w,y+d,z),P(x+w,y+d,z+h),P(x+w,y,z+h)],right);
+ poly([P(x,y,z+h),P(x+w,y,z+h),P(x+w,y+d,z+h),P(x,y+d,z+h)],top);}
+// floor
+poly([P(-0.8,-2.4),P(11.8,-2.4),P(11.8,8.6),P(-0.8,8.6)],'#16181D');
+// stage
+box(0.4,-2.1,0,10.8,1.3,0.45,'#2B2E35','#1F2228','#24272E');
+const lbl=el('text',{x:P(5.8,-1.45,0.5)[0],y:P(5.8,-1.45,0.5)[1]+8,'text-anchor':'middle','font-family':'Unbounded','font-weight':800,'font-size':22,fill:'#FAF8F3','fill-opacity':.6});lbl.textContent='СЦЕНА';
+// 6 blocks: 3 cols x 2 rows; the yellow one front-centre
+const blocks=[];for(let r=0;r<2;r++)for(let c=0;c<3;c++)blocks.push({x:c*3.9+0.2,y:r*3.9+0.6,mine:(r===1&&c===1)});
+blocks.sort((a,b)=>(a.x+a.y)-(b.x+b.y));
+for(const b of blocks){const g=b.mine;
+ box(b.x,b.y,0,2.8,2.8,0.18,g?'#F0B90B':'#2B2E35',g?'#B88C08':'#1F2228',g?'#D4A20A':'#24272E');
+ for(let i=0;i<4;i++)for(let j=0;j<3;j++){const sx=b.x+0.25+i*0.62,sy=b.y+0.35+j*0.82;
+  box(sx,sy,0.18,0.42,0.42,0.32,g?'#FAF8F3':'#585D66',g?'#C9CBD1':'#3A3E46',g?'#E3E1DA':'#474B53');}
+}
+for(const b of blocks){const g=b.mine;
+ const [cx,cy]=P(b.x+1.4,b.y+1.4,0.9);
+ const w=g?260:132,h=g?62:40;
+ el('rect',{x:cx-w/2,y:cy-h-24,width:w,height:h,rx:h/2,fill:g?'#F0B90B':'#2B2E35',stroke:g?'#0D0F13':'none','stroke-width':3});
+ const t=el('text',{x:cx,y:cy-24-h/2+(g?9:7),'text-anchor':'middle','font-family':'Unbounded','font-weight':800,'font-size':g?24:15,fill:g?'#0D0F13':'#C9CBD1'});t.textContent=g?'ВАШЕ МЕСТО':'ЗАНЯТО';
+ if(g){el('polygon',{points:`${cx-12},${cy-26} ${cx+12},${cy-26} ${cx},${cy-6}`,fill:'#F0B90B'});}
+}
+window.ready=document.fonts.ready.then(()=>Promise.all(['800 40px Unbounded','700 40px Unbounded','600 40px Montserrat'].map(f=>document.fonts.load(f,'РЕШЕНО'))));
+</script></body></html>

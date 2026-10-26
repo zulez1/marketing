@@ -1,0 +1,55 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><link rel="stylesheet" href="/content/_kit/fonts/fonts.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:1080px;height:1920px;overflow:hidden;font-family:Montserrat,sans-serif}
+#s{position:absolute;inset:0;overflow:hidden}
+.ink{background:#0D0F13;color:#FAF8F3}.amber{background:#F0B90B;color:#0D0F13}.paper{background:#F3F0E8;color:#0D0F13}
+.logo{position:absolute;left:80px;top:150px;display:flex;align-items:center;gap:16px;font-family:Unbounded}
+.mark{width:22px;height:22px;background:#F0B90B;border-radius:5px;transform:rotate(45deg)}.amber .mark{background:#0D0F13}
+.logo b{font-weight:800;font-size:34px;display:block}.logo small{font-weight:700;font-size:16px;color:#F0B90B;display:block}.amber .logo small{color:#0D0F13}.paper .logo small{color:#8A6B06}
+.kick{position:absolute;left:80px;top:300px;font-family:Unbounded;font-weight:700;font-size:34px;text-transform:uppercase;padding:14px 30px;border-radius:999px;background:#F0B90B;color:#0D0F13}
+.amber .kick{background:#0D0F13;color:#F0B90B}.paper .kick{background:rgba(240,185,11,.25);color:#8A6B06}
+.num{position:absolute;left:60px;top:360px;font-family:Unbounded;font-weight:800;font-size:520px;line-height:1;color:#F0B90B;letter-spacing:-.04em}
+.unit{position:absolute;left:80px;top:900px;font-family:Unbounded;font-weight:800;font-size:120px;text-transform:uppercase}
+.t{position:absolute;z-index:2;left:80px;right:80px;top:400px;font-family:Unbounded;font-weight:800;text-transform:uppercase;line-height:1.02}
+.t i{font-style:normal;color:#F0B90B}.amber .t i{background:#0D0F13;color:#F0B90B;padding:0 .1em}.paper .t i{color:#8A6B06}
+.z{position:absolute;left:50%;bottom:260px;transform-origin:50% 100%}
+.glow{position:absolute;left:50%;bottom:380px;width:820px;height:820px;margin-left:-410px;border-radius:50%;background:rgba(240,185,11,.38);filter:blur(130px)}
+.foot{position:absolute;left:80px;right:80px;bottom:150px;font-weight:700;font-size:34px;text-align:center;opacity:.85}
+.flash{position:absolute;inset:0;background:#fff}
+</style></head><body><div id="s"></div>
+<script>
+const N=+(location.hash.slice(1)||11);
+const days=n=>(n%10===1&&n%100!==11)?'день':([2,3,4].includes(n%10)&&![12,13,14].includes(n%100))?'дня':'дней';
+const Z=n=>`/content/_kit/img/zubr-${n}.png`;
+const S=[
+ {a:0,b:3,type:'count'},
+ {a:3,b:5,type:'hit'},
+ {a:5,b:6.5,bg:'amber',p:'facepalm',k:'А вы',t:'Ещё<br><i>не решили</i><br>ехать?',fs:110,h:760},
+ {a:6.5,b:8,bg:'paper',p:'podmigivaet',k:'Стартовая цена',t:'Только для<br><i>первых 50</i>',fs:110,h:760},
+ {a:8,b:12,bg:'ink',p:'priglashaet',k:'13–14 ноября · Москва',t:'Успейте<br>на <i>РЕШЕНО</i>',fs:120,h:720,end:1},
+];
+window.ready=(async()=>{await document.fonts.ready;await Promise.all(['800 40px Unbounded','700 40px Unbounded','700 40px Montserrat'].map(f=>document.fonts.load(f,'РЕШЕНО 0123456789')));
+ await Promise.all(['v-shoke','facepalm','podmigivaet','priglashaet'].map(p=>new Promise(r=>{const i=new Image();i.onload=r;i.src=Z(p);})));return 1;})();
+const ease=x=>1-Math.pow(1-Math.min(Math.max(x,0),1),3);
+const back=x=>{x=Math.min(Math.max(x,0),1);const c=1.70158;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2);};
+const logo='<div class="logo"><div class="mark"></div><div><b>РЕШЕНО</b><small>BUSINESS LIVE</small></div></div>';
+const s=document.getElementById('s');
+window.render=t=>{const sc=S.find(x=>t>=x.a&&t<x.b)||S[S.length-1];const lt=t-sc.a;let h='';
+ if(sc.type==='count'){s.className='ink';const start=30,k=Math.min(1,lt/2.8),cur=Math.round(start-(start-N)*Math.pow(k,0.6));
+  h=`<div class="glow"></div>${logo}<div class="kick">До форума</div><div class="num">${cur}</div>
+  <img class="z" src="${Z('v-shoke')}" style="height:620px;transform:translateX(-50%) translateY(${(1-ease(lt/0.6))*500}px)">`;}
+ else if(sc.type==='hit'){s.className='amber';const p=back(lt/0.35);
+  h=`${logo}<div class="kick">До форума осталось</div><div class="num" style="color:#0D0F13;transform:scale(${0.7+0.3*p});transform-origin:0 30%">${N}</div>
+  <div class="unit" style="opacity:${ease((lt-0.15)/0.3)}">${days(N)}</div>
+  <img class="z" src="${Z('v-shoke')}" style="height:620px;left:78%;transform:translateX(-50%) scale(${0.85+0.15*p})">
+  ${lt<0.12?`<div class="flash" style="opacity:${0.6*(1-lt/0.12)}"></div>`:''}`;}
+ else{s.className=sc.bg;const pop=back(lt/0.3),txt=ease((lt-0.05)/0.3),drift=1+0.03*lt;
+  h=`${sc.bg==='ink'?'<div class="glow"></div>':''}${logo}
+  <div class="kick" style="opacity:${txt}">${sc.k}</div>
+  <div class="t" style="font-size:${sc.fs}px;opacity:${txt};transform:translateY(${(1-txt)*60}px)">${sc.t}</div>
+  <img class="z" src="${Z(sc.p)}" style="height:${sc.h}px;transform:translateX(-50%) scale(${(0.8+0.2*pop)*drift})">
+  ${sc.end?`<div class="foot" style="opacity:${ease((lt-0.6)/0.4)}">reshenoforum.ru</div>`:''}
+  ${lt<0.12?`<div class="flash" style="opacity:${0.55*(1-lt/0.12)}"></div>`:''}`;}
+ s.innerHTML=h;};
+</script></body></html>
