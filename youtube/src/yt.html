@@ -214,6 +214,46 @@ SCENES.outro={dur:20.0, build(root){
   s.fade.style.opacity=inOut(prog(t,19.4,0.6));
 }};
 
+// ---- OUTRO for RUTUBE / VK Video (15s): no end-screen slots — links in description + QR ----
+SCENES.outro_rutube={dur:15.0, build(root){
+  const s={};
+  s.w=makeWave(root,['#8A6B06','#F0B90B','#FAF8F3','#0D0F13']);
+  s.stage=makeStage(root);
+  s.content=el('div','layer',root);
+  s.logo=makeLogo(s.content,{size:118,x:140,y:150,subSize:32});
+  s.tag=el('div','tagline',s.content,'Не просто послушать.<br><span style="color:var(--amber)">Приехать решить.</span>');
+  s.tag.style.cssText+='position:absolute;left:140px;top:370px;font-size:46px';
+  s.cta=el('div','',s.content,'<div style="font-family:Unbounded;font-weight:800;font-size:58px;text-transform:uppercase;line-height:1.05">Ссылки —<br><span style="color:var(--amber)">в описании</span></div>');
+  s.cta.style.cssText+='position:absolute;left:140px;top:560px';
+  s.arrow=el('div','',s.content,'<svg width="96" height="96" viewBox="0 0 96 96"><circle cx="48" cy="48" r="46" fill="#F0B90B"/><path d="M48 24v40M30 48l18 18 18-18" stroke="#0D0F13" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+  s.arrow.style.cssText+='position:absolute;left:800px;top:612px';
+  s.list=el('div','',s.content,['Регистрация на форум','Telegram-канал РЕШЕНО','Чат владельцев спортивного бизнеса'].map(x=>`<div class="eyebrow" style="font-size:30px;margin-bottom:18px"><span class="dot"></span>${x}</div>`).join(''));
+  s.list.style.cssText+='position:absolute;left:140px;top:770px';
+  s.card=el('div','',s.content,`<div style="background:#FAF8F3;border-radius:36px;padding:44px;display:flex;flex-direction:column;align-items:center;gap:26px;box-shadow:0 30px 80px rgba(0,0,0,.45)">
+     <img src="qr-rutube.svg" style="width:420px;height:420px;display:block">
+     <div style="font-family:Unbounded;font-weight:800;font-size:30px;color:#0D0F13;text-transform:uppercase">Наведите камеру</div>
+     <div style="font-weight:700;font-size:28px;color:#585D66">reshenoforum.ru</div></div>`);
+  s.card.style.cssText+='position:absolute;left:1180px;top:150px';
+  s.date=el('div','pill',s.content,'<span class="dot" style="width:12px;height:12px;border-radius:50%;background:var(--amber)"></span>13–14 ноября · Москва');
+  s.date.style.cssText+='position:absolute;left:1180px;top:820px';
+  s.mq=el('div','marquee',s.content); s.mq.style.top='1010px'; s.mq.style.height='70px';
+  s.mq.innerHTML='<div class="track">'+Array(6).fill('<span>Деньги</span><span>Клиенты</span><span>Команда</span><span>Рост</span><span>Будущее</span><span>Business Live</span><span>Business Match</span><span>Owner Tables</span>').join('')+'</div>';
+  s.fade=el('div','fade',root);
+  return s;
+}, drive(s,t){
+  driveWave(s.w,t,0.0,null);
+  const on=t>=0.55; s.stage.style.display=s.content.style.display=on?'block':'none';
+  driveStage(s.stage,t);
+  driveLogo(s.logo,t,0.6);
+  const up=(e,st,d=20)=>{ const p=outQuart(prog(t,st,0.7)); e.style.opacity=p; e.style.transform=`translateY(${lerp(d,0,p)}px)`; };
+  up(s.tag,1.2); up(s.cta,1.6); up(s.list,2.1); up(s.date,2.4);
+  const ap=outBack(prog(t,1.9,0.5)); s.arrow.style.transform=`scale(${ap}) translateY(${t>2.4?Math.sin((t-2.4)*4)*8:0}px)`;
+  const cp=outExpo(prog(t,1.0,0.8)); s.card.style.opacity=cp; s.card.style.transform=`translateX(${lerp(140,0,cp)}px) rotate(${lerp(4,0,cp)}deg)`;
+  s.mq.style.transform=`translateY(${lerp(80,0,outQuart(prog(t,1.3,0.6)))}px)`;
+  s.mq.firstChild.style.transform=`translateX(${-t*70}px)`;
+  s.fade.style.opacity=inOut(prog(t,14.4,0.6));
+}};
+
 let CUR;
 window.setup=name=>{ const root=document.getElementById('root'); root.innerHTML=''; CUR={sc:SCENES[name]}; CUR.s=CUR.sc.build(root); window.DURATION=CUR.sc.dur; };
 window.render=t=>CUR.sc.drive(CUR.s,t);
