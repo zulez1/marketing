@@ -16,6 +16,10 @@ for (const n of [3, 4, 5, 6]) {
   cards.push({ out: `../post-speaker${n}-color.png`, story: false, bg: A + `bg_${bg}.jpg`, paper: A + `speaker${n}_paper.png`, photo: A + `speaker${n}_cutout_color.png` });
   cards.push({ out: `../story-speaker${n}-color.png`, story: true, bg: A + `bg_${bg}_story.jpg`, paper: A + `speaker${n}_paper.png`, photo: A + `speaker${n}_cutout_color.png` });
 }
+// speaker 7 — real texts (Артур Каримов)
+const S7 = { first: 'Артур', last: 'Каримов', role: 'Директор футбольной школы «Акрон» (Тольятти), «Акрон Академия им.\u00a0Коноплёва»', topic: 'Что футбольная школа может украсть<br>у ритейла и автодилеров' };
+cards.push({ ...S7, out: '../post-speaker7-color.png', story: false, bg: A + 'bg_IMG_2335.jpg', paper: A + 'speaker7_paper.png', photo: A + 'speaker7_cutout_color.png' });
+cards.push({ ...S7, out: '../story-speaker7-color.png', story: true, bg: A + 'bg_IMG_2335_story.jpg', paper: A + 'speaker7_paper.png', photo: A + 'speaker7_cutout_color.png' });
 const only = process.argv[2];
 const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
 for (const c of cards) {
