@@ -20,6 +20,10 @@ for (const n of [3, 4, 5, 6]) {
 const S7 = { first: 'Артур', last: 'Каримов', role: 'Директор футбольной школы «Акрон» (Тольятти), «Акрон Академия им.\u00a0Коноплёва»', topic: 'Что футбольная школа может украсть<br>у ритейла и автодилеров' };
 cards.push({ ...S7, out: '../post-speaker7-color.png', story: false, bg: A + 'bg_IMG_2335.jpg', paper: A + 'speaker7_paper.png', photo: A + 'speaker7_cutout_color.png' });
 cards.push({ ...S7, out: '../story-speaker7-color.png', story: true, bg: A + 'bg_IMG_2335_story.jpg', paper: A + 'speaker7_paper.png', photo: A + 'speaker7_cutout_color.png' });
+// speaker 8 — Александр Тарасов (topic not announced yet: card shows his results instead)
+const S8 = { first: 'Александр', last: 'Тарасов', role: 'Основатель ФК «Девятка», экс-спортивный директор «Спартак Будущее»', tlabel: '22 года в детском футболе', topic: 'Воспитанники играют в RCD Espanyol и юношеских сборных' };
+cards.push({ ...S8, out: '../post-speaker8-color.png', story: false, bg: A + 'bg_IMG_2378.jpg', paper: A + 'speaker8_paper.png', photo: A + 'speaker8_cutout_color.png' });
+cards.push({ ...S8, out: '../story-speaker8-color.png', story: true, bg: A + 'bg_IMG_2378_story.jpg', paper: A + 'speaker8_paper.png', photo: A + 'speaker8_cutout_color.png' });
 const only = process.argv[2];
 const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
 for (const c of cards) {

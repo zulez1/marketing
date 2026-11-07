@@ -50,7 +50,7 @@ window.build = (s) => {
     <div class="name" style="font-size:${story ? 84 : 72}px;margin-top:34px">${s.first}</div>
     <div class="name hl" style="font-size:${story ? 84 : 72}px">${s.last}</div>
     <div class="role" style="font-size:${story ? 36 : 32}px;width:${story ? 560 : 500}px;margin-top:36px">${s.role}</div>
-    <div class="tlabel" style="margin-top:30px">Тема выступления</div>
+    <div class="tlabel" style="margin-top:30px">${s.tlabel || 'Тема выступления'}</div>
     <div class="topic" style="font-size:${story ? 40 : 36}px;width:${story ? 600 : 500}px;margin-top:10px">${s.topic}</div></div>
   <div class="abs cta" style="left:70px;top:${H - (story ? 420 : 250)}px;font-size:${story ? 32 : 28}px">${s.cta}<span class="arrow">→</span></div>
   <div class="abs foot" style="left:70px;top:${H - (story ? 300 : 120)}px;font-size:${story ? 26 : 22}px;width:${story ? 380 : 470}px;line-height:1.24">Форум владельцев и руководителей спортивного бизнеса</div>`;
