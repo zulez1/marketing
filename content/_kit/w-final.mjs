@@ -1,7 +1,7 @@
 // Final week 08.11–12.11. Render: node render.mjs w-final.mjs [filter]
 // Fill in the venue below and re-render when the team confirms it.
 export const dir = '../nedelya-final_08.11-12.11';
-const VENUE = '[Название площадки]', ADDRESS = '[Улица, дом]', REG = '[08:30]', CLOSE = '[время]';
+const VENUE = '«ТЕЛЕГРАФЪ»', ADDRESS = 'Дмитровское шоссе, 81', START = '10:00';
 const Z = n => `img/zubr-${n}.png`;
 const P = { size: 'P', corner: '13–14.11 · Москва', bottom: { l: 'reshenoforum.ru' } };
 const S = { size: 'S', corner: '', bottom: { l: 'reshenoforum.ru' } };
@@ -26,13 +26,11 @@ const countdown = (d, n, pose, theme) => ({ ...S, out: `storis-otschet/${d}-${n}
 
 export const specs = [
   // Вс 08.11 — локация
-  { ...P, out: '01-vs-08.11-lokaciya/post.png', theme: 'amber', valign: 'flex-start', mainRight: 400,
-    mascot: { src: Z('priglashaet'), h: 820, right: -130, bottom: -30 },
-    blocks: [{ type: 'tag', text: 'Локация есть' }, { type: 'gap', s: 'm' },
-      { type: 'display', max: 110, lines: ['Где мы', { t: 'встретимся?', c: 'acc' }] }, { type: 'gap', s: 'm' },
-      { type: 'card', size: 40, kicker: 'Площадка', html: VENUE }, { type: 'gap', s: 's' },
-      { type: 'card', size: 34, kicker: 'Адрес', html: ADDRESS }, { type: 'gap', s: 'm' },
-      { type: 'p', size: 30, html: '<b>13–14 ноября.</b> Удобная логистика, современный зал и всё для продуктивной работы' }] },
+  { ...P, out: '01-vs-08.11-lokaciya/post.png', theme: 'amber', valign: 'flex-start', mainRight: 90,
+    blocks: [{ type: 'tag', text: 'Локация есть' }, { type: 'gap', s: 's' },
+      { type: 'display', max: 110, lines: ['Где мы', { t: 'встретимся?', c: 'acc' }] }, { type: 'gap', s: 's' },
+      { type: 'photo', h: 470, src: 'img/telegraf.jpg' }, { type: 'gap', s: 's' },
+      { type: 'card', size: 36, kicker: 'Площадка', html: `${VENUE} · ${ADDRESS}` }] },
   { ...S, out: '01-vs-08.11-lokaciya/storis-marshrut.png', theme: 'ink', valign: 'flex-start', mainBottom: 760,
     mascot: { src: Z('dumaet'), h: 620, right: 470, bottom: 300, glow: true },
     blocks: [{ type: 'tag', text: 'Локация' }, { type: 'gap', s: 's' },
@@ -74,7 +72,7 @@ export const specs = [
     mascot: { src: Z('aplodiruet'), h: 620, right: -40, bottom: -20 },
     blocks: [{ type: 'tag', text: 'Готовы на 99%' }, { type: 'gap', s: 'm' },
       { type: 'display', max: 170, lines: ['Завтра', { t: 'старт', c: 'acc' }] }, { type: 'gap', s: 'm' },
-      { type: 'list', items: [['Где', `${VENUE}`], ['Когда', `13.11, регистрация с ${REG}`], ['Билеты', `закрываются сегодня в ${CLOSE}`]] },
+      { type: 'list', items: [['Где', `${VENUE}, ${ADDRESS}`], ['Когда', `13 ноября, начало в ${START}`], ['Билеты', 'сегодня — последний день']] },
       ] },
   countdown('12.11', 1, 'aplodiruet', 'amber'),
 ];

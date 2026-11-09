@@ -8,5 +8,5 @@
 | Ср 11.11 | `04-sr-11.11-top-spikery/post.png` — 8 спикеров (утро) · `post-podgotovka.png` — чек-лист (вечер) | `storis-otschet/11.11-2.png` |
 | Чт 12.11 | `05-cht-12.11-zavtra-start/post.png` — «Завтра старт» | `storis-otschet/12.11-1.png` |
 
-**До публикации:** площадка, адрес, время регистрации и закрытия продаж стоят как `[…]`. Вписать в начало `content/_kit/w-final.mjs` (VENUE, ADDRESS, REG, CLOSE) и перерендерить: `node render.mjs w-final.mjs`. На 08.11 по плану нужно фото площадки — пришлите, добавим.
+**Данные площадки:** «ТЕЛЕГРАФЪ», Дмитровское шоссе, 81, начало 13.11 в 10:00 — заданы в начале `content/_kit/w-final.mjs` (VENUE, ADDRESS, START). Фото на 08.11 — кадр из видео площадки (`content/_kit/img/telegraf.jpg`). Перерендер: `node render.mjs w-final.mjs`.
 Силуэты на 10.11 — обезличенные фото спикеров, никого узнать нельзя.
