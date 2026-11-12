@@ -1,0 +1,83 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8">
+<link rel="stylesheet" href="../../content/_kit/fonts/fonts.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:1920px;height:1080px;overflow:hidden;background:#0D0F13;color:#FAF8F3;font-family:Montserrat,sans-serif;-webkit-font-smoothing:antialiased;position:relative}
+.glow{position:absolute;border-radius:50%;filter:blur(140px);background:rgba(240,185,11,.30)}
+.grid{position:absolute;inset:0;background-image:radial-gradient(rgba(250,248,243,.06) 1.5px,transparent 1.6px);background-size:28px 28px}
+.logo{position:absolute;left:96px;top:84px;display:flex;align-items:center;gap:22px;font-family:Unbounded}
+.mark{width:30px;height:30px;background:#F0B90B;border-radius:7px;transform:rotate(45deg)}
+.logo b{font-weight:800;font-size:46px;display:block;letter-spacing:.01em}.logo small{font-weight:700;font-size:21px;color:#F0B90B;display:block;margin-top:6px}
+.badge{position:absolute;left:96px;top:228px;font-family:Unbounded;font-weight:700;font-size:28px;text-transform:uppercase;background:#F0B90B;color:#0D0F13;padding:14px 30px;border-radius:999px}
+.msg{position:absolute;left:96px;top:340px;width:700px}
+.msg h1{font-family:Unbounded;font-weight:800;font-size:70px;line-height:1.06;text-transform:uppercase}
+.msg h1 i{font-style:normal;color:#F0B90B}
+.msg p{font-size:34px;font-weight:600;line-height:1.38;color:#C9CBD1;margin-top:30px;width:680px}
+.msg p b{color:#FAF8F3}
+.dots{position:absolute;left:96px;bottom:90px;display:flex;gap:14px;align-items:center}
+.dots span{height:12px;border-radius:6px;background:#2B2E35}
+.foot{position:absolute;left:96px;bottom:130px;font-family:Unbounded;font-weight:700;font-size:24px;opacity:.5}
+.zubr{position:absolute;left:790px;bottom:-20px;height:570px}
+.panel{position:absolute;right:70px;top:70px;bottom:70px;width:640px;background:#16181D;border:2px solid #2B2E35;border-radius:40px;padding:44px 50px;display:flex;flex-direction:column;justify-content:space-between}
+.q{display:flex;gap:34px;align-items:center}
+.q .code{width:250px;height:250px;background:#FAF8F3;border-radius:22px;padding:18px;flex-shrink:0;position:relative}
+.q .code img{width:100%;height:100%;display:block}
+.q .k{font-family:Unbounded;font-weight:800;font-size:31px;text-transform:uppercase;line-height:1.1}
+.q .k i{font-style:normal;color:#F0B90B}
+.q .d{font-size:24px;font-weight:600;color:#C9CBD1;margin-top:14px;line-height:1.35}
+.q .u{font-size:20px;font-weight:700;color:#F0B90B;margin-top:14px}
+.sep{height:2px;background:#2B2E35;margin:0 -50px}
+.scan{font-family:Unbounded;font-weight:700;font-size:22px;text-transform:uppercase;letter-spacing:.04em;color:#F0B90B;text-align:center}
+.ring{position:absolute;inset:-8px;border:4px solid #F0B90B;border-radius:28px;opacity:0}
+</style></head><body>
+<div class="glow" id="g1" style="width:900px;height:900px"></div>
+<div class="glow" id="g2" style="width:700px;height:700px;background:rgba(240,185,11,.18)"></div>
+<div class="grid"></div>
+<div class="logo"><div class="mark"></div><div><b>РЕШЕНО</b><small>BUSINESS LIVE</small></div></div>
+<div class="badge">Перерыв · нетворкинг</div>
+<div id="msgs"></div>
+<img class="zubr" id="zubr" src="../../content/_kit/img/zubr-networking.png">
+<div class="foot">13–14 ноября · «ТЕЛЕГРАФЪ» · Москва</div>
+<div class="dots" id="dots"></div>
+<div class="panel">
+  <div class="scan">Наведите камеру телефона</div>
+  <div class="q"><div class="code"><img src="qr-chat.svg"><div class="ring" id="r1"></div></div>
+    <div><div class="k">Чат<br><i>участников</i></div><div class="d">Знакомства, контакты и договорённости</div><div class="u">t.me/+cuCPtIqyIAozOTYy</div></div></div>
+  <div class="sep"></div>
+  <div class="q"><div class="code"><img src="qr-kanal.svg"><div class="ring" id="r2"></div></div>
+    <div><div class="k">Канал<br><i>форума</i></div><div class="d">Программа, фото и материалы</div><div class="u">t.me/reshenoforum2026</div></div></div>
+</div>
+<script>
+const M=[
+ ['Знакомьтесь&nbsp;— <i>решения</i> рядом','Лучшие идеи часто рождаются <b>в кулуарах</b>, а не на сцене'],
+ ['Подойдите к тому, <i>кого не знаете</i>','Спросите: <b>«Какую задачу вы приехали решить?»</b>'],
+ ['Обменяйтесь <i>контактами</i>','Вступайте в <b>чат участников</b> — договориться о встрече после форума будет проще'],
+ ['Фото и материалы&nbsp;— <i>в канале</i>','Публикуем программу, презентации и фото <b>в Telegram-канале РЕШЕНО</b>'],
+ ['Скоро <i>продолжаем</i>','Возьмите кофе и <b>возвращайтесь в зал</b> к началу следующей сессии'],
+];
+const SEG=6, DURATION=M.length*SEG; window.DURATION=DURATION;
+const box=document.getElementById('msgs'), dots=document.getElementById('dots');
+box.innerHTML=M.map(([h,p])=>`<div class="msg"><h1>${h}</h1><p>${p}</p></div>`).join('');
+dots.innerHTML=M.map(()=>'<span></span>').join('');
+const els=[...box.children], ds=[...dots.children];
+const ease=x=>x<0?0:x>1?1:x*x*(3-2*x);
+window.render=(t)=>{
+  t=((t%DURATION)+DURATION)%DURATION;
+  const T=2*Math.PI*t/DURATION;
+  g1.style.left=(-150+120*Math.sin(T))+'px'; g1.style.top=(200+90*Math.cos(T))+'px';
+  g2.style.left=(700+110*Math.cos(T))+'px'; g2.style.top=(520+70*Math.sin(2*T))+'px';
+  els.forEach((e,i)=>{
+    let d=t-i*SEG; if(d<-DURATION/2) d+=DURATION; if(d>DURATION/2) d-=DURATION; // wrap for loop
+    const inn=ease((d+0.45)/0.45), out=1-ease((d-SEG+0.9)/0.45), o=Math.min(inn,out);
+    e.style.opacity=o; e.style.transform=`translateY(${(1-inn)*40-(1-out)*40}px)`;
+    const a=(d>=-0.3&&d<SEG-0.3); ds[i].style.width=a?'64px':'12px'; ds[i].style.background=a?'#F0B90B':'#2B2E35';
+  });
+  zubr.style.transform=`translateY(${Math.sin(T*5)*8}px) rotate(${Math.sin(T*5+1)*1.2}deg)`;
+  // QR rings pulse alternately, every half-segment
+  const ph=(t%SEG)/SEG;
+  r1.style.opacity=Math.max(0,Math.sin(Math.PI*Math.min(1,ph*2)))*.9; r1.style.transform=`scale(${1+0.05*Math.sin(Math.PI*Math.min(1,ph*2))})`;
+  r2.style.opacity=ph>.5?Math.sin(Math.PI*(ph-.5)*2)*.9:0; r2.style.transform=`scale(${1+0.05*(ph>.5?Math.sin(Math.PI*(ph-.5)*2):0)})`;
+};
+window.ready=(async()=>{await document.fonts.ready;await Promise.all(['800 40px Unbounded','700 40px Unbounded','600 40px Montserrat','700 40px Montserrat'].map(f=>document.fonts.load(f,'РЕШЕНО Aa')));
+  await Promise.all([...document.images].map(i=>i.decode().catch(()=>{}))); render(0);})();
+</script></body></html>
