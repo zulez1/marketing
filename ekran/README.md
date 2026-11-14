@@ -20,3 +20,8 @@ QR-коды (проверены, считываются):
 
 Логотипы — `partnery-logo/` (из архива + `splace.png`). `nashe-budushchee.png` — дубль SVG «Фонд Наше будущее», в заставке используется SVG.
 Исходник: `src/partnery.html` (списки `A` и `B` — верхний и нижний ряд; `#still` — статичная версия). Рендер: `node src/cap.mjs partnery.html frames <dir>` → ffmpeg.
+
+# Заглушка на большой экран
+
+- `zaglushka-1920x1080.png` (Full HD) и `zaglushka-3840x2160.png` (4K): название форума, «Business Live», слоган, дата и город; внизу «При поддержке» — Фонд «Наше будущее» и ассоциация.
+- Исходник: `src/zaglushka.html`, рендер: `node src/shot.mjs zaglushka.html <out.png> [scale]`.

@@ -1,0 +1,54 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8">
+<link rel="stylesheet" href="../../content/_kit/fonts/fonts.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:1920px;height:1080px;overflow:hidden;background:#0D0F13;color:#FAF8F3;font-family:Montserrat,sans-serif;-webkit-font-smoothing:antialiased;position:relative}
+.glow{position:absolute;border-radius:50%;filter:blur(160px)}
+.dots{position:absolute;inset:0;background-image:radial-gradient(rgba(250,248,243,.07) 1.5px,transparent 1.6px);background-size:30px 30px;
+  -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 45%,#000 30%,transparent 100%)}
+.ghost{position:absolute;left:50%;top:50%;transform:translate(-50%,-58%);font-family:Unbounded;font-weight:800;font-size:520px;letter-spacing:-.02em;
+  color:transparent;-webkit-text-stroke:2px rgba(240,185,11,.10);white-space:nowrap}
+.arc{position:absolute;border:2px solid rgba(240,185,11,.22);border-radius:50%}
+.top{position:absolute;left:0;right:0;top:120px;text-align:center;font-family:Unbounded;font-weight:700;font-size:26px;letter-spacing:.32em;text-transform:uppercase;color:#C9CBD1}
+.center{position:absolute;left:0;right:0;top:250px;display:flex;flex-direction:column;align-items:center}
+.brand{display:flex;align-items:center;gap:56px}
+.mark{width:110px;height:110px;background:#F0B90B;border-radius:24px;transform:rotate(45deg);box-shadow:0 0 90px rgba(240,185,11,.55)}
+.name{font-family:Unbounded;font-weight:800;font-size:230px;line-height:.9;letter-spacing:-.01em}
+.bl{margin-top:30px;font-family:Unbounded;font-weight:700;font-size:54px;letter-spacing:.42em;color:#F0B90B;padding-left:.42em}
+.tag{margin-top:52px;font-size:38px;font-weight:600;color:#C9CBD1;text-align:center;line-height:1.35}
+.tag b{color:#FAF8F3}
+.date{margin-top:36px;display:flex;align-items:center;gap:26px;font-family:Unbounded;font-weight:700;font-size:34px}
+.date i{width:12px;height:12px;background:#F0B90B;border-radius:3px;transform:rotate(45deg)}
+.bottom{position:absolute;left:0;right:0;bottom:64px;display:flex;flex-direction:column;align-items:center;gap:22px}
+.bottom .lbl{font-size:20px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#8E919A}
+.logos{display:flex;gap:28px}
+.pill{height:128px;background:#FAF8F3;border-radius:26px;display:flex;align-items:center;justify-content:center;padding:0 46px;box-shadow:0 20px 50px rgba(0,0,0,.5)}
+.pill img{display:block}
+.line{position:absolute;bottom:236px;height:2px;width:520px;background:linear-gradient(90deg,rgba(240,185,11,0),rgba(240,185,11,.55))}
+</style></head><body>
+<div class="glow" style="width:1300px;height:900px;left:310px;top:120px;background:rgba(240,185,11,.20)"></div>
+<div class="glow" style="width:600px;height:600px;left:-200px;top:600px;background:rgba(240,185,11,.12)"></div>
+<div class="glow" style="width:600px;height:600px;right:-200px;top:-200px;background:rgba(240,185,11,.10)"></div>
+<div class="dots"></div>
+<div class="arc" style="width:1500px;height:1500px;left:210px;top:-560px"></div>
+<div class="arc" style="width:1900px;height:1900px;left:10px;top:-760px;border-color:rgba(240,185,11,.10)"></div>
+<div class="ghost">РЕШЕНО</div>
+<div class="top">Форум владельцев и руководителей спортивного бизнеса</div>
+<div class="center">
+  <div class="brand"><div class="mark"></div><div class="name">РЕШЕНО</div></div>
+  <div class="bl">BUSINESS LIVE</div>
+  <div class="tag">Не просто послушать. <b>Приехать решить</b></div>
+  <div class="date"><span>13–14 ноября 2026</span><i></i><span>Москва</span></div>
+</div>
+<div class="line" style="left:120px"></div><div class="line" style="right:120px;transform:scaleX(-1)"></div>
+<div class="bottom">
+  <div class="lbl">При поддержке</div>
+  <div class="logos">
+    <div class="pill"><img src="../partnery-logo/fond-nashe-budushchee.svg" style="height:92px"></div>
+    <div class="pill"><img src="../partnery-logo/association.png" style="height:100px"></div>
+  </div>
+</div>
+<script>
+window.ready=(async()=>{await document.fonts.ready;await Promise.all(['800 40px Unbounded','700 40px Unbounded','600 40px Montserrat','700 40px Montserrat'].map(f=>document.fonts.load(f,'РЕШЕНО Aa')));
+  await Promise.all([...document.images].map(i=>i.decode().catch(()=>{})));})();
+</script></body></html>
